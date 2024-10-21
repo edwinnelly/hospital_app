@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 23, 2024 at 08:17 PM
+-- Generation Time: Oct 21, 2024 at 02:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,6 +50,41 @@ INSERT INTO `account_list` (`id`, `account_no`, `account_name`, `cr`, `dr`, `bal
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admission`
+--
+
+CREATE TABLE `admission` (
+  `id` int(11) NOT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `tittle` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `appointment_date` datetime DEFAULT NULL,
+  `doc_id` int(11) DEFAULT NULL,
+  `dated` datetime DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `specialist_id` int(11) DEFAULT NULL,
+  `assigned_doc_id` int(11) DEFAULT NULL,
+  `payment_status` varchar(20) DEFAULT 'notpaid',
+  `payment_type` varchar(22) DEFAULT 'open',
+  `hmo_id` int(11) DEFAULT NULL,
+  `folder_status` varchar(12) NOT NULL DEFAULT 'open',
+  `ward_id` int(11) DEFAULT NULL,
+  `room` int(11) DEFAULT NULL,
+  `discharged` varchar(11) DEFAULT 'No'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admission`
+--
+
+INSERT INTO `admission` (`id`, `pid`, `tittle`, `description`, `appointment_date`, `doc_id`, `dated`, `status`, `specialist_id`, `assigned_doc_id`, `payment_status`, `payment_type`, `hmo_id`, `folder_status`, `ward_id`, `room`, `discharged`) VALUES
+(4, 11919, 'his should work if the problem was due to the', 'his should work if the problem was due to the', '2024-10-26 17:59:00', 8702, '2024-10-06 18:59:11', 2, 10, 40, 'notpaid', 'open', NULL, 'open', 8, 23, 'yes'),
+(5, 11919, 'should work if the problem was due to the', 'In perferendis quis', '2024-11-02 18:47:00', 8702, '2024-10-06 19:47:17', 2, 5, 36, 'notpaid', 'open', NULL, 'open', 9, 23, 'yes'),
+(6, 11919, 'should work if the problem was due to the', 'In perferendis quis', '2024-11-07 18:50:00', 8702, '2024-10-06 19:50:04', 0, 9, 36, 'notpaid', 'open', NULL, 'open', 4, 23, 'No');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `appointment`
 --
 
@@ -66,21 +101,35 @@ CREATE TABLE `appointment` (
   `assigned_doc_id` int(11) DEFAULT NULL,
   `payment_status` varchar(20) DEFAULT 'notpaid',
   `payment_type` varchar(22) DEFAULT 'open',
-  `hmo_id` int(11) DEFAULT NULL
+  `hmo_id` int(11) DEFAULT NULL,
+  `folder_status` varchar(12) NOT NULL DEFAULT 'open'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`id`, `pid`, `tittle`, `description`, `appointment_date`, `doc_id`, `dated`, `status`, `specialist_id`, `assigned_doc_id`, `payment_status`, `payment_type`, `hmo_id`) VALUES
-(46, 11919, 'the appropriate version for your operating system (Windows, macOS, Linux)', 'appropriate version for your operating system (Windows, macOS, Linux)', '2024-09-11 22:52:00', 8702, '2024-09-11 23:52:47', 2, 9, 40, 'notpaid', 'open', NULL),
-(47, 11919, 'will try to automatically detect the email settings for your provider. If it succeeds, you can click “Done” to finish the setup.', 'Thunderbird will try to automatically detect the email settings for your provider. If it succeeds, you can click “Done” to finish the setup.', '2024-09-11 22:55:00', 8702, '2024-09-11 23:55:41', 1, 11, 47, 'notpaid', 'open', NULL),
-(48, 11919, 'wqdqwdwqsqwsqw', 'wqwsqws wqsqwsqw', '2024-09-19 14:31:00', 8702, '2024-09-12 15:32:11', 0, 5, 37, 'notpaid', 'open', NULL),
-(49, 11919, 'ed we d ed qw dewwdd', 'ewdedqewd ew dwed', '2024-09-12 15:25:00', 8702, '2024-09-12 16:25:57', 0, 5, 37, 'notpaid', 'open', NULL),
-(50, 11919, 'wdqwdwqd qwd', 'dw. werwfef re. erfre', '2024-09-12 15:31:00', 8702, '2024-09-12 16:31:37', 0, 10, 36, 'notpaid', 'open', NULL),
-(51, 11919, 'ewdew d we d we we', 'ew dew d we dw ed w ed e d we d e', '2024-09-12 15:32:00', 8702, '2024-09-12 16:32:46', 0, 5, 37, 'notpaid', 'open', NULL),
-(52, 2, 'testing app', 'sending data top the patient', '2024-09-19 22:18:00', 8702, '2024-09-19 23:18:33', 0, 9, 37, 'notpaid', 'open', NULL);
+INSERT INTO `appointment` (`id`, `pid`, `tittle`, `description`, `appointment_date`, `doc_id`, `dated`, `status`, `specialist_id`, `assigned_doc_id`, `payment_status`, `payment_type`, `hmo_id`, `folder_status`) VALUES
+(46, 11919, 'the appropriate version for your operating system (Windows, macOS, Linux)', 'appropriate version for your operating system (Windows, macOS, Linux)', '2024-09-11 00:00:00', 8702, '2024-09-11 23:52:47', 2, 9, 40, 'notpaid', 'open', NULL, 'open'),
+(47, 11919, 'will try to automatically detect the email settings for your provider. If it succeeds, you can click “Done” to finish the setup.', 'Thunderbird will try to automatically detect the email settings for your provider. If it succeeds, you can click “Done” to finish the setup.', '2024-09-11 00:00:00', 8702, '2024-09-11 23:55:41', 1, 11, 47, 'notpaid', 'open', NULL, 'open'),
+(48, 11919, 'wqdqwdwqsqwsqw', 'wqwsqws wqsqwsqw', '2024-09-19 00:00:00', 8702, '2024-09-12 15:32:11', 0, 5, 37, 'notpaid', 'open', NULL, 'open'),
+(49, 11919, 'ed we d ed qw dewwdd', 'ewdedqewd ew dwed', '2024-09-12 00:00:00', 8702, '2024-09-12 16:25:57', 0, 5, 37, 'notpaid', 'open', NULL, 'open'),
+(50, 11919, 'wdqwdwqd qwd', 'dw. werwfef re. erfre', '2024-09-12 00:00:00', 8702, '2024-09-12 16:31:37', 0, 10, 36, 'notpaid', 'open', NULL, 'open'),
+(51, 11919, 'ewdew d we d we we', 'ew dew d we dw ed w ed e d we d e', '2024-09-12 00:00:00', 8702, '2024-09-12 16:32:46', 0, 5, 37, 'notpaid', 'open', NULL, 'open'),
+(52, 2, 'testing app', 'sending data top the patient', '2024-09-19 00:00:00', 8702, '2024-09-19 23:18:33', 0, 9, 37, 'notpaid', 'open', NULL, 'open'),
+(53, 11919, 'testing qewfewfewf', 'testing  efwqwe ewqf we', '2024-09-24 00:00:00', 8702, '2024-09-24 21:34:56', 0, 5, 37, 'notpaid', 'open', NULL, 'open'),
+(55, 11919, 'nnnnnk kjl j jk jk', 'mmmnn. jknkljn j', '2024-09-24 12:59:00', 8702, '2024-09-24 22:00:02', 0, 10, 37, 'notpaid', 'open', NULL, 'open'),
+(56, 11919, 'his should work if the problem was due to the', 'his should work if the problem was due to the', '2024-09-24 13:03:00', 8702, '2024-09-24 22:04:01', 0, 11, 37, 'notpaid', 'open', NULL, 'open'),
+(57, 11919, 'should work if the problem was due to the', 'work if the problem was due to the', '2024-09-24 13:06:00', 8702, '2024-09-24 22:07:05', 0, 5, 37, 'notpaid', 'open', NULL, 'open'),
+(58, 11919, 'should work if the problem was due to the', 'work if the problem was due to the', '2024-09-24 13:12:00', 8702, '2024-09-24 22:12:09', 0, 11, 36, 'notpaid', 'open', NULL, 'open'),
+(59, 11919, 'In sint libero offic', 'Maiores aperiam dist', '2024-10-03 17:11:00', 8702, '2024-10-03 18:11:06', 1, 5, 47, 'notpaid', 'open', NULL, 'closed'),
+(60, 11919, 'Voluptatem dolor vo', 'Beatae quia hic vel', '2024-10-03 17:11:00', 8702, '2024-10-03 18:12:15', 1, 5, 37, 'notpaid', 'open', NULL, 'closed'),
+(61, 11919, 'Eligendi aut tempora', 'Non quia tempora off', '2024-10-03 17:13:00', 8702, '2024-10-03 18:13:14', 1, 11, 36, 'notpaid', 'open', NULL, 'closed'),
+(62, 11919, 'Amet enim exercitat', 'Quo dolore iusto ips', '2024-10-03 17:42:00', 8702, '2024-10-03 18:42:54', 1, 9, 36, 'notpaid', 'open', NULL, 'closed'),
+(63, 7, 'Est magna velit qui', 'Odit consequatur qu', '2024-10-03 17:51:00', 8702, '2024-10-03 18:51:11', 1, 0, 37, 'notpaid', 'open', NULL, 'closed'),
+(64, 7, 'Veniam sint exceptu', 'Error similique Nam', '2024-10-03 17:51:00', 8702, '2024-10-03 18:51:44', 0, 16, 40, 'notpaid', 'open', NULL, 'open'),
+(65, 6, 'A dolor Nam sed dolo', 'Dignissimos aut sed', '2024-10-03 17:59:00', 8702, '2024-10-03 18:59:48', 0, 9, 40, 'notpaid', 'open', NULL, 'open'),
+(66, 6, 'Molestiae laboris sa', 'Magna ipsa repellen', '2024-10-03 18:02:00', 8702, '2024-10-03 19:03:25', 0, 10, 36, 'notpaid', 'open', NULL, 'open');
 
 -- --------------------------------------------------------
 
@@ -434,7 +483,14 @@ INSERT INTO `hmo_payment_requests` (`request_id`, `patient_id`, `hmo_id`, `servi
 (112, 7, 4, 36, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
 (113, 7, 12, 21, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
 (114, 7, 12, 13, '2024-09-01 13:20:07', NULL, 'pending', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(115, 7, 12, 18, '2024-09-01 13:20:07', NULL, 'pending', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b');
+(115, 7, 12, 18, '2024-09-01 13:20:07', NULL, 'pending', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
+(116, 11919, 1, 11, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(117, 11919, 1, 29, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(118, 11919, 1, 36, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(119, 11919, 1, 21, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(120, 11919, 1, 18, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(121, 11919, 1, 8, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
+(122, 11919, 1, 24, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07');
 
 -- --------------------------------------------------------
 
@@ -545,7 +601,8 @@ INSERT INTO `hmo_request_window` (`id`, `title`, `request_key`, `date_added`, `p
 (11, 'loi', '66ce2b78f07bf', '2024-08-27 20:39:44', 2),
 (12, 'dw', '66ce2b949ecc7', '2024-08-27 20:40:13', 2),
 (13, 'test bill for john', '66d1a86b7d86c', '2024-08-30 12:10:04', 1234),
-(14, '43tfdgvfbggb', '66d469fc9a55b', '2024-09-01 14:20:07', 7);
+(14, '43tfdgvfbggb', '66d469fc9a55b', '2024-09-01 14:20:07', 7),
+(15, 'test class', '66f646b6a7b07', '2024-09-26 22:47:19', 11919);
 
 -- --------------------------------------------------------
 
@@ -754,8 +811,8 @@ INSERT INTO `patient_data` (`id`, `pid`, `patient_name`, `age`, `sex`, `occupati
 (116, '3', 'Alice Johnson', 42, 'Female', 'Doctor', 'Single', '789 Oak St', 'Tribe C', 'Hinduism', 'Bob Johnson', '11223344551', 'alice.johnson@example.com', '2024-06-23', 'password789', '3', NULL, '45603262387049981157images.jpeg', 'Admitted', 'Yes', 'DOC003', '3', 150, 'Yes', 'Standard'),
 (117, '4', 'Robert Brown', 30, 'Male', 'Lawyer', 'Married', '101 Maple St', 'Tribe D', 'Buddhism', 'Sarah Brown', '2233445562', 'robert.brown@example.com', '2024-06-23', 'password101', '4', 20, '67620071995438451238testimonial2.png.jpeg', 'Not Admitted', 'No', 'DOC004', '4', 250, 'No', 'Premium'),
 (118, '345678', 'Emily Davis', 37, 'Female', 'Nurse', 'Single', '202 Pine St', 'Tribe E', 'Judaism', 'James Davis', '3344556672', 'emily.davis@example.com', '2024-06-23', 'password202', '5', NULL, 'photo5.jpg', 'Admitted', 'Yes', 'DOC005', '5', 300, 'Yes', 'Standard'),
-(119, '6', 'Michael Wilson', 45, 'Male', 'Accountant', 'Married', '303 Cedar St', 'Tribe F', 'Christianity', 'Linda Wilson', '4455667788', 'michael.wilson@example.com', '2024-06-23', 'password303', '4', NULL, 'photo6.jpg', 'Not Admitted', 'No', 'DOC006', '6', 350, 'No', 'Premium'),
-(120, '7', 'Sarah Miller', 32, 'Female', 'Architect', 'Single', '404 Spruce St', 'Tribe G', 'Islam', 'Tom Miller', '5566778899', 'sarah.miller@example.com', '2024-06-23', 'password404', '12', NULL, 'photo7.jpg', 'Admitted', 'Yes', 'DOC007', '7', 400, 'Yes', 'Standard'),
+(119, '6', 'Michael Wilson', 45, 'Male', 'Accountant', 'Married', '303 Cedar St', 'Tribe F', 'Christianity', 'Linda Wilson', '4455667788', 'michael.wilson@example.com', '2024-06-23', 'password303', '4', NULL, '4001895396324826717523301970726414565898images.jpeg', 'Not Admitted', 'No', 'DOC006', '6', 350, 'No', 'Premium'),
+(120, '7', 'Sarah Miller', 32, 'Female', 'Architect', 'Single', '404 Spruce St', 'Tribe G', 'Islam', 'Tom Miller', '5566778899', 'sarah.miller@example.com', '2024-06-23', 'password404', '12', NULL, '72065848724133506991images.jpeg', 'Admitted', 'Yes', 'DOC007', '7', 400, 'Yes', 'Standard'),
 (121, '8', 'David Lee', 29, 'Male', 'Designer', 'Single', '505 Willow St', 'Tribe H', 'Hinduism', 'Amy Lee', '6677889900', 'david.lee@example.com', '2024-06-23', 'password505', '8', NULL, 'photo8.jpg', 'Not Admitted', 'No', 'DOC008', '8', 450, 'No', 'Premium'),
 (122, '9', 'Laura Harris', 39, 'Female', 'Engineer', 'Married', '606 Birch St', 'Tribe I', 'Buddhism', 'James Harris', '7788990011', 'laura.harris@example.com', '2024-06-23', 'password606', '9', NULL, 'photo9.jpg', 'Admitted', 'Yes', 'DOC009', '9', 500, 'Yes', 'Standard'),
 (123, '10', 'Mark Young', 41, 'Male', 'Teacher', 'Single', '707 Cherry St', 'Tribe J', 'Judaism', 'Susan Young', '8899001122', 'mark.young@example.com', '2024-06-23', 'password707', '12', NULL, 'photo10.jpg', 'Not Admitted', 'No', 'DOC010', '10', 550, 'No', 'Premium'),
@@ -1126,7 +1183,7 @@ CREATE TABLE `staffs_accounts` (
 --
 
 INSERT INTO `staffs_accounts` (`id`, `staff_id`, `username`, `firstname`, `lastname`, `age`, `qualification`, `department_id`, `occupation`, `sex`, `marital_status`, `phone`, `email_address`, `password`, `next_of_kin`, `religion`, `tribe`, `salary`, `state_of_origin`, `nationality`, `photo`, `specialist_id`, `access_level_id`, `date_added`, `address`, `login_sec`, `hmo_key`) VALUES
-(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'e45221df59af107296903376401c9dd3af820446e82fbf6d8d99fa39703cc1e5', 4),
+(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'e1dcb518fc6f3f8b33b8360cbb8add82eb04974d34830dd827c5dc832a657c64', 4),
 (37, '6968', 'Darlington4334', 'Darlington', 'Markswell', NULL, NULL, 9, NULL, 'Female', 'Divorced', '+133-344-333-234', 'markswql32@gmail.com', '$2y$10$17Gl9nwUUj0IvfX.dtD7/.ePRdVzkrPnrakBe4Kxeln7YNCyFXgoG', NULL, NULL, NULL, 0, NULL, NULL, '19263249508507174638profilepicture-2-portrait-head.jpeg', 11, 3, '2024-03-04 19:09:38', NULL, NULL, NULL),
 (38, '7103', 'jude230404', 'James', 'Judes', NULL, 'doc', 5, 'test', 'Male', 'Single', '+1-959-434-333', 'jude@gmail.com', '12345678', 'test1', 'Islam', 'test2', 0, 'test3', 'test4', '59036974417032658281testimonial3.png', 5, 1, '2024-03-04 19:11:01', '', 'c855490cca3c62647712b70accc1649160369495aa67ef5f2d5cb962a19dc4d6', 3),
 (40, '11910', 'Ijeoma23323', 'Peter', 'Ijeoma', NULL, NULL, 1, NULL, 'Female', 'Single', '+55-959-434-333', 'Ijeoma@gmail.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, '96900264384358715127favicon.png', 5, 6, '2024-03-04 19:20:53', '', NULL, NULL),
@@ -1157,6 +1214,37 @@ CREATE TABLE `transactions_account` (
   `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wards`
+--
+
+CREATE TABLE `wards` (
+  `id` int(11) NOT NULL,
+  `ward_name` varchar(225) DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  `no_bed` int(11) DEFAULT NULL,
+  `dated_created` varchar(22) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wards`
+--
+
+INSERT INTO `wards` (`id`, `ward_name`, `amount`, `no_bed`, `dated_created`) VALUES
+(2, 'General Ward', 500, 20, '2024-10-01'),
+(3, 'Private Ward', 1000, 10, '2024-10-02'),
+(4, 'ICUs', 20000, 5, '2024-10-03'),
+(5, 'Maternity Ward', 700, 15, '2024-10-04'),
+(6, 'Surgical Ward', 1200, 8, '2024-10-05'),
+(7, 'Pediatric Ward', 800, 12, '2024-10-06'),
+(8, 'Emergency Ward', 2000, 3, '2024-10-07'),
+(9, 'Psychiatric Ward', 600, 10, '2024-10-08'),
+(10, 'Oncology Ward', 1800, 7, '2024-10-09'),
+(11, 'Neurology Ward', 1600, 6, '2024-10-10'),
+(15, 'wcwecwecew', 2112120, NULL, NULL);
+
 --
 -- Indexes for dumped tables
 --
@@ -1165,6 +1253,12 @@ CREATE TABLE `transactions_account` (
 -- Indexes for table `account_list`
 --
 ALTER TABLE `account_list`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `admission`
+--
+ALTER TABLE `admission`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1383,6 +1477,12 @@ ALTER TABLE `transactions_account`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `wards`
+--
+ALTER TABLE `wards`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -1393,10 +1493,16 @@ ALTER TABLE `account_list`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `admission`
+--
+ALTER TABLE `admission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `asset`
@@ -1456,7 +1562,7 @@ ALTER TABLE `expense_category`
 -- AUTO_INCREMENT for table `hmo`
 --
 ALTER TABLE `hmo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `hmo_lab_group`
@@ -1468,7 +1574,7 @@ ALTER TABLE `hmo_lab_group`
 -- AUTO_INCREMENT for table `hmo_payment_requests`
 --
 ALTER TABLE `hmo_payment_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `hmo_pharmacy_group`
@@ -1492,7 +1598,7 @@ ALTER TABLE `hmo_radio_group`
 -- AUTO_INCREMENT for table `hmo_request_window`
 --
 ALTER TABLE `hmo_request_window`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `hmo_specialist_group`
@@ -1601,6 +1707,12 @@ ALTER TABLE `staffs_accounts`
 --
 ALTER TABLE `transactions_account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `wards`
+--
+ALTER TABLE `wards`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
