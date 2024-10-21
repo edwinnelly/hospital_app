@@ -76,8 +76,8 @@ foreach ($get_data_details as $data);
                                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="">Diagnosis
                                                 History</a></li>
 
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Prescriptions</a></li>
+                                        <li class="nav-item"><a class="nav-link" 
+                                                href="drug_administration?fid=<?php echo base64_encode($get_staff_id); ?>">Prescriptions</a></li>
 
                                         <li class="nav-item"><a class="nav-link"
                                                 href="patient_lab_profile?fid=<?php echo $get_staff_id; ?>&&st=TWFya3NvbiBPIEhpbmxkYQ==">Lab
