@@ -1,0 +1,2 @@
+<button type="button" class="btn btn-sm btn-default"><i class="zmdi zmdi-check delete_emp" data-id="<?php echo ($data['id']);  ?>" data-fullname="<?php echo ($data['firstname']) . ' ' .($data['lastname']);   ?>" data-reason="<?php echo ($data['reasons']);   ?>"></i></button>
+<button type="button" class="btn btn-sm btn-default"><i class="zmdi zmdi-block cancel" data-id="<?php echo ($data['id']);  ?>" data-fullname="<?php echo ($data['firstname']) . ' ' .($data['lastname']);   ?>" data-reason="<?php echo ($data['reasons']);   ?>"></i></button>
