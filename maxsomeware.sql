@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 21, 2024 at 02:44 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Nov 01, 2024 at 04:05 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -155,8 +155,8 @@ CREATE TABLE `asset` (
 --
 
 INSERT INTO `asset` (`asset_id`, `asset_name`, `asset_type`, `purchase_date`, `purchase_price`, `current_value`, `location`, `condition_asset`, `owner`, `notes`) VALUES
-(2, 'Television\r\n', 'electronics', '2024-03-13', 120000.00, 20000.00, 'PHC', 'Good', 'hospital wilson ltd', 'this item is still in good shape'),
-(6, 'Telescope', 'electronics', '2024-03-20', 340000.00, 340000.00, 'No11 wilson Road', 'good', 'Hospital EM', 'this is for hospital use');
+(2, 'Television\r\n', 'electronics', '2024-03-13', '120000.00', '20000.00', 'PHC', 'Good', 'hospital wilson ltd', 'this item is still in good shape'),
+(6, 'Telescope', 'electronics', '2024-03-20', '340000.00', '340000.00', 'No11 wilson Road', 'good', 'Hospital EM', 'this is for hospital use');
 
 -- --------------------------------------------------------
 
@@ -251,6 +251,36 @@ INSERT INTO `drugs_list` (`id`, `drugs_name`, `generic`, `category_id`, `drugs_c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `drug_admin`
+--
+
+CREATE TABLE `drug_admin` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `drug_id` varchar(255) NOT NULL,
+  `dose` varchar(100) NOT NULL,
+  `presc_date` date NOT NULL DEFAULT current_timestamp(),
+  `frequency` varchar(100) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `next_due_date` datetime NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `skip_dose` varchar(50) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `drug_admin`
+--
+
+INSERT INTO `drug_admin` (`id`, `patient_id`, `doctor_id`, `drug_id`, `dose`, `presc_date`, `frequency`, `start_date`, `end_date`, `next_due_date`, `status`, `skip_dose`, `created_at`, `updated_at`) VALUES
+(33, 11919, 8702, '18', '500mg', '2024-11-01', '1', '2024-11-02', '2024-11-09', '0000-00-00 00:00:00', 'no', NULL, '2024-11-01 11:59:19', '2024-11-01 11:59:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `drug_brand_category`
 --
 
@@ -294,6 +324,33 @@ INSERT INTO `drug_category` (`id`, `category_name`, `status`, `created_date`) VA
 (12, 'Antihistamines', 0, NULL),
 (13, 'Antipyretics', 0, NULL),
 (14, 'Antivirals', 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `drug_charting`
+--
+
+CREATE TABLE `drug_charting` (
+  `id` int(11) NOT NULL,
+  `drug_id` int(11) DEFAULT NULL,
+  `status` varchar(35) DEFAULT NULL,
+  `doctor_id` int(50) DEFAULT NULL,
+  `frequency` varchar(255) DEFAULT NULL,
+  `doses` varchar(225) DEFAULT NULL,
+  `chart_date` date DEFAULT NULL,
+  `patient_id` varchar(255) DEFAULT NULL,
+  `comment` varchar(535) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `drug_charting`
+--
+
+INSERT INTO `drug_charting` (`id`, `drug_id`, `status`, `doctor_id`, `frequency`, `doses`, `chart_date`, `patient_id`, `comment`, `created_at`, `updated_at`) VALUES
+(9, 18, 'charted', 8702, '2', '500mg', '2024-11-02', '11919', 'Taken once', '2024-11-01 11:59:57', '2024-11-01 11:59:57');
 
 -- --------------------------------------------------------
 
@@ -454,43 +511,43 @@ CREATE TABLE `hmo_payment_requests` (
 --
 
 INSERT INTO `hmo_payment_requests` (`request_id`, `patient_id`, `hmo_id`, `service_id`, `request_date`, `amount_requested`, `status`, `response_date`, `amount_approved`, `created_at`, `docid`) VALUES
-(86, 11919, 1, 29, '2024-08-27 19:37:25', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:25', '66ce2aee4ffbe'),
-(87, 11919, 1, 33, '2024-08-27 19:37:25', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:25', '66ce2aee4ffbe'),
-(88, 11919, 4, 36, '2024-08-27 19:37:25', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:25', '66ce2aee4ffbe'),
-(89, 11919, 1, 29, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(90, 11919, 4, 22, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(91, 11919, 1, 23, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(92, 11919, 1, 31, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(93, 11919, 1, 24, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(94, 11919, 1, 5, '2024-08-27 19:37:51', NULL, 'paid', NULL, 0.00, '2024-08-27 19:37:51', '66ce2b00bfb5c'),
-(95, 2, 2, 11, '2024-08-27 19:39:44', NULL, 'paid', NULL, 0.00, '2024-08-27 19:39:44', '66ce2b78f07bf'),
-(96, 2, 4, 29, '2024-08-27 19:39:44', NULL, 'paid', NULL, 0.00, '2024-08-27 19:39:44', '66ce2b78f07bf'),
-(97, 2, 4, 33, '2024-08-27 19:39:44', NULL, 'paid', NULL, 0.00, '2024-08-27 19:39:44', '66ce2b78f07bf'),
-(98, 2, 2, 36, '2024-08-27 19:39:44', NULL, 'paid', NULL, 0.00, '2024-08-27 19:39:44', '66ce2b78f07bf'),
-(99, 2, 4, 5, '2024-08-27 19:40:13', NULL, 'paid', NULL, 0.00, '2024-08-27 19:40:13', '66ce2b949ecc7'),
-(100, 2, 2, 9, '2024-08-27 19:40:13', NULL, 'paid', NULL, 0.00, '2024-08-27 19:40:13', '66ce2b949ecc7'),
-(101, 2, 2, 25, '2024-08-27 19:40:13', NULL, 'paid', NULL, 0.00, '2024-08-27 19:40:13', '66ce2b949ecc7'),
-(102, 1234, 4, 11, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(103, 1234, 1, 29, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(104, 1234, 1, 33, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(105, 1234, 1, 36, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(106, 1234, 1, 21, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(107, 1234, 1, 13, '2024-08-30 11:10:04', NULL, 'paid', NULL, 0.00, '2024-08-30 11:10:04', '66d1a86b7d86c'),
-(108, NULL, NULL, NULL, '2024-08-31 14:26:53', NULL, 'pending', NULL, 0.00, '2024-08-31 14:26:53', NULL),
-(109, 7, 12, 11, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(110, 7, 12, 29, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(111, 7, 12, 33, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(112, 7, 4, 36, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(113, 7, 12, 21, '2024-09-01 13:20:07', NULL, 'paid', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(114, 7, 12, 13, '2024-09-01 13:20:07', NULL, 'pending', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(115, 7, 12, 18, '2024-09-01 13:20:07', NULL, 'pending', NULL, 0.00, '2024-09-01 13:20:07', '66d469fc9a55b'),
-(116, 11919, 1, 11, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(117, 11919, 1, 29, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(118, 11919, 1, 36, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(119, 11919, 1, 21, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(120, 11919, 1, 18, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(121, 11919, 1, 8, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07'),
-(122, 11919, 1, 24, '2024-09-27 05:47:19', NULL, 'pending', NULL, 0.00, '2024-09-27 05:47:19', '66f646b6a7b07');
+(86, 11919, 1, 29, '2024-08-27 19:37:25', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:25', '66ce2aee4ffbe'),
+(87, 11919, 1, 33, '2024-08-27 19:37:25', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:25', '66ce2aee4ffbe'),
+(88, 11919, 4, 36, '2024-08-27 19:37:25', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:25', '66ce2aee4ffbe'),
+(89, 11919, 1, 29, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(90, 11919, 4, 22, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(91, 11919, 1, 23, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(92, 11919, 1, 31, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(93, 11919, 1, 24, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(94, 11919, 1, 5, '2024-08-27 19:37:51', NULL, 'paid', NULL, '0.00', '2024-08-27 19:37:51', '66ce2b00bfb5c'),
+(95, 2, 2, 11, '2024-08-27 19:39:44', NULL, 'paid', NULL, '0.00', '2024-08-27 19:39:44', '66ce2b78f07bf'),
+(96, 2, 4, 29, '2024-08-27 19:39:44', NULL, 'paid', NULL, '0.00', '2024-08-27 19:39:44', '66ce2b78f07bf'),
+(97, 2, 4, 33, '2024-08-27 19:39:44', NULL, 'paid', NULL, '0.00', '2024-08-27 19:39:44', '66ce2b78f07bf'),
+(98, 2, 2, 36, '2024-08-27 19:39:44', NULL, 'paid', NULL, '0.00', '2024-08-27 19:39:44', '66ce2b78f07bf'),
+(99, 2, 4, 5, '2024-08-27 19:40:13', NULL, 'paid', NULL, '0.00', '2024-08-27 19:40:13', '66ce2b949ecc7'),
+(100, 2, 2, 9, '2024-08-27 19:40:13', NULL, 'paid', NULL, '0.00', '2024-08-27 19:40:13', '66ce2b949ecc7'),
+(101, 2, 2, 25, '2024-08-27 19:40:13', NULL, 'paid', NULL, '0.00', '2024-08-27 19:40:13', '66ce2b949ecc7'),
+(102, 1234, 4, 11, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(103, 1234, 1, 29, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(104, 1234, 1, 33, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(105, 1234, 1, 36, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(106, 1234, 1, 21, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(107, 1234, 1, 13, '2024-08-30 11:10:04', NULL, 'paid', NULL, '0.00', '2024-08-30 11:10:04', '66d1a86b7d86c'),
+(108, NULL, NULL, NULL, '2024-08-31 14:26:53', NULL, 'pending', NULL, '0.00', '2024-08-31 14:26:53', NULL),
+(109, 7, 12, 11, '2024-09-01 13:20:07', NULL, 'paid', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(110, 7, 12, 29, '2024-09-01 13:20:07', NULL, 'paid', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(111, 7, 12, 33, '2024-09-01 13:20:07', NULL, 'paid', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(112, 7, 4, 36, '2024-09-01 13:20:07', NULL, 'paid', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(113, 7, 12, 21, '2024-09-01 13:20:07', NULL, 'paid', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(114, 7, 12, 13, '2024-09-01 13:20:07', NULL, 'pending', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(115, 7, 12, 18, '2024-09-01 13:20:07', NULL, 'pending', NULL, '0.00', '2024-09-01 13:20:07', '66d469fc9a55b'),
+(116, 11919, 1, 11, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(117, 11919, 1, 29, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(118, 11919, 1, 36, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(119, 11919, 1, 21, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(120, 11919, 1, 18, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(121, 11919, 1, 8, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07'),
+(122, 11919, 1, 24, '2024-09-27 05:47:19', NULL, 'pending', NULL, '0.00', '2024-09-27 05:47:19', '66f646b6a7b07');
 
 -- --------------------------------------------------------
 
@@ -801,30 +858,29 @@ CREATE TABLE `patient_data` (
 --
 
 INSERT INTO `patient_data` (`id`, `pid`, `patient_name`, `age`, `sex`, `occupation`, `marital_status`, `address`, `tribe`, `religion`, `next_kin`, `phone_no`, `emails_patient`, `added_date`, `password`, `hmo_id`, `hmo_plans`, `photo`, `addimission_status`, `out_patient`, `assigned_doc_id`, `specialist`, `wallet`, `retainer`, `account_type`) VALUES
-(1, '11919', 'Christain Judge', 33, 'Male', 'Tebc scn', 'Married', 'No11 New close phc', 'River State', 'Taoism', 'Ebong Chris', '090337474443', 'judgeschrid@gmail.com', '2024-06-23 15:30:33', NULL, '1', NULL, '98165409741725203863person-1.jpg', NULL, NULL, NULL, NULL, 0, 'Individual', 'vip'),
-(14, '1', 'John Doe', 35, 'Male', 'Engineer', 'Single', '123 Main St', 'Tribe A', 'Christianity', 'Jane Doe', '1234567890', 'john.doe@example.com', '2024-06-23', 'password123', '1', NULL, '71368435084027629951testimonial1.png.jpeg', 'Admitted', 'Yes', 'DOC001', '1', 100, 'Yes', 'Standard'),
-(16, '323', 'Alice Johnson', 42, 'Female', 'Doctor', 'Single', '789 Oak St', 'Tribe C', 'Hinduism', 'Bob Johnson', '1122334455', 'alice.johnson@example.com', '2024-06-23', 'password789', '3', NULL, '45603262387049981157images.jpeg', 'Admitted', 'Yes', 'DOC003', '3', 150, 'Yes', 'Standard'),
-(17, '4123', 'Robert Brown', 30, 'Male', 'Lawyer', 'Married', '101 Maple St', 'Tribe D', 'Buddhism', 'Sarah Brown', '2233445566', 'robert.brown@example.com', '2024-06-23', 'password101', '4', 20, '23301970726414565898images.jpeg', 'Not Admitted', 'No', 'DOC004', '4', 250, 'No', 'Premium'),
-(18, '5', 'Emily Davis', 37, 'Female', 'Nurse', 'Single', '202 Pine St', 'Tribe E', 'Judaism', 'James Davis', '3344556677', 'emily.davis@example.com', '2024-06-23', 'password202', '5', NULL, 'photo5.jpg', 'Admitted', 'Yes', 'DOC005', '5', 300, 'Yes', 'Standard'),
-(114, '1234', 'John Doe', 35, 'Male', 'Engineer', 'Single', '123 Main St', 'Tribe A', 'Christianity', 'Jane Doe', '12345678901', 'john.doe@example.com', '2024-06-23', 'password123', '1', NULL, '71368435084027629951testimonial1.png.jpeg', 'Admitted', 'Yes', 'DOC001', '1', 100, 'Yes', 'Standard'),
-(115, '2', 'Jane Smith', 28, 'Female', 'Teacher', 'Married', '456 Elm St', 'Tribe B', 'Islam', 'John Smith', '09876543211', 'jane.smith@example.com', '2024-06-23', 'password456', '2', NULL, '3874079683549105122674893594681720531206admin3.png', 'Not Admitted', 'No', 'DOC002', '2', 200, 'No', 'Premium'),
-(116, '3', 'Alice Johnson', 42, 'Female', 'Doctor', 'Single', '789 Oak St', 'Tribe C', 'Hinduism', 'Bob Johnson', '11223344551', 'alice.johnson@example.com', '2024-06-23', 'password789', '3', NULL, '45603262387049981157images.jpeg', 'Admitted', 'Yes', 'DOC003', '3', 150, 'Yes', 'Standard'),
-(117, '4', 'Robert Brown', 30, 'Male', 'Lawyer', 'Married', '101 Maple St', 'Tribe D', 'Buddhism', 'Sarah Brown', '2233445562', 'robert.brown@example.com', '2024-06-23', 'password101', '4', 20, '67620071995438451238testimonial2.png.jpeg', 'Not Admitted', 'No', 'DOC004', '4', 250, 'No', 'Premium'),
-(118, '345678', 'Emily Davis', 37, 'Female', 'Nurse', 'Single', '202 Pine St', 'Tribe E', 'Judaism', 'James Davis', '3344556672', 'emily.davis@example.com', '2024-06-23', 'password202', '5', NULL, 'photo5.jpg', 'Admitted', 'Yes', 'DOC005', '5', 300, 'Yes', 'Standard'),
-(119, '6', 'Michael Wilson', 45, 'Male', 'Accountant', 'Married', '303 Cedar St', 'Tribe F', 'Christianity', 'Linda Wilson', '4455667788', 'michael.wilson@example.com', '2024-06-23', 'password303', '4', NULL, '4001895396324826717523301970726414565898images.jpeg', 'Not Admitted', 'No', 'DOC006', '6', 350, 'No', 'Premium'),
-(120, '7', 'Sarah Miller', 32, 'Female', 'Architect', 'Single', '404 Spruce St', 'Tribe G', 'Islam', 'Tom Miller', '5566778899', 'sarah.miller@example.com', '2024-06-23', 'password404', '12', NULL, '72065848724133506991images.jpeg', 'Admitted', 'Yes', 'DOC007', '7', 400, 'Yes', 'Standard'),
-(121, '8', 'David Lee', 29, 'Male', 'Designer', 'Single', '505 Willow St', 'Tribe H', 'Hinduism', 'Amy Lee', '6677889900', 'david.lee@example.com', '2024-06-23', 'password505', '8', NULL, 'photo8.jpg', 'Not Admitted', 'No', 'DOC008', '8', 450, 'No', 'Premium'),
-(122, '9', 'Laura Harris', 39, 'Female', 'Engineer', 'Married', '606 Birch St', 'Tribe I', 'Buddhism', 'James Harris', '7788990011', 'laura.harris@example.com', '2024-06-23', 'password606', '9', NULL, 'photo9.jpg', 'Admitted', 'Yes', 'DOC009', '9', 500, 'Yes', 'Standard'),
-(123, '10', 'Mark Young', 41, 'Male', 'Teacher', 'Single', '707 Cherry St', 'Tribe J', 'Judaism', 'Susan Young', '8899001122', 'mark.young@example.com', '2024-06-23', 'password707', '12', NULL, 'photo10.jpg', 'Not Admitted', 'No', 'DOC010', '10', 550, 'No', 'Premium'),
-(124, '11', 'Nancy King', 34, 'Female', 'Doctor', 'Married', '808 Aspen St', 'Tribe K', 'Christianity', 'John King', '9900112233', 'nancy.king@example.com', '2024-06-23', 'password808', '11', NULL, 'photo11.jpg', 'Admitted', 'Yes', 'DOC011', '11', 600, 'Yes', 'Standard'),
-(125, '12', 'Chris Scott', 36, 'Male', 'Lawyer', 'Single', '909 Walnut St', 'Tribe L', 'Islam', 'Emma Scott', '1112233445', 'chris.scott@example.com', '2024-06-23', 'password909', '4', NULL, 'photo12.jpg', 'Not Admitted', 'No', 'DOC012', '12', 650, 'No', 'Premium'),
-(126, '13', 'Patricia Lewis', 27, 'Female', 'Nurse', 'Married', '1010 Beech St', 'Tribe M', 'Hinduism', 'Michael Lewis', '1223344556', 'patricia.lewis@example.com', '2024-06-23', 'password1010', '13', NULL, 'photo13.jpg', 'Admitted', 'Yes', 'DOC013', '13', 700, 'Yes', 'Standard'),
-(127, '14', 'Steven Clark', 38, 'Male', 'Engineer', 'Single', '1111 Maple St', 'Tribe N', 'Buddhism', 'Rachel Clark', '1334455667', 'steven.clark@example.com', '2024-06-23', 'password1111', '14', NULL, 'photo14.jpg', 'Not Admitted', 'No', 'DOC014', '14', 750, 'No', 'Premium'),
-(128, '15', 'Karen Robinson', 40, 'Female', 'Teacher', 'Married', '1212 Pine St', 'Tribe O', 'Judaism', 'David Robinson', '1445566778', 'karen.robinson@example.com', '2024-06-23', 'password1212', '15', NULL, 'photo15.jpg', 'Admitted', 'Yes', 'DOC015', '15', 800, 'Yes', 'Standard'),
-(129, '16', 'Brian Walker', 31, 'Male', 'Doctor', 'Single', '1313 Cedar St', 'Tribe P', 'Christianity', 'Laura Walker', '1556677889', 'brian.walker@example.com', '2024-06-23', 'password1313', '16', NULL, 'photo16.jpg', 'Not Admitted', 'No', 'DOC016', '16', 850, 'No', 'Premium'),
-(130, '17', 'Jessica Hall', 33, 'Female', 'Lawyer', 'Married', '1414 Spruce St', 'Tribe Q', 'Islam', 'Robert Hall', '1667788990', 'jessica.hall@example.com', '2024-06-23', 'password1414', '17', NULL, 'photo17.jpg', 'Admitted', 'Yes', 'DOC017', '17', 900, 'Yes', 'Standard'),
-(131, '18', 'Kevin Allen', 44, 'Male', 'Nurse', 'Single', '1515 Willow St', 'Tribe R', 'Hinduism', 'Mary Allen', '1778899001', 'kevin.allen@example.com', '2024-06-23', 'password1515', '18', NULL, 'photo18.jpg', 'Not Admitted', 'No', 'DOC018', '18', 950, 'No', 'Premium'),
-(132, '19', 'Lisa Wright', 29, 'Female', 'Engineer', 'Married', '1616 Birch St', 'Tribe S', 'Buddhism', 'James Wright', '1889900112', 'lisa.wright@example.com', '2024-06-23', 'password1616', '19', NULL, 'photo19.jpg', 'Admitted', 'Yes', 'DOC019', '19', 1000, 'Yes', 'Standard');
+(1, '11919', 'Christain Judge', 33, 'Male', 'Tebc scn', 'Married', 'No11 New close phc', 'River State', 'Taoism', 'Ebong Chris', '090337474443', 'judgeschrid@gmail.com', '2024-06-23 15:30:33', NULL, '1', NULL, '98165409741725203863person-1.jpg', NULL, NULL, NULL, NULL, '0', 'Individual', 'vip'),
+(14, '1', 'John Doe', 35, 'Male', 'Engineer', 'Single', '123 Main St', 'Tribe A', 'Christianity', 'Jane Doe', '1234567890', 'john.doe@example.com', '2024-06-23', 'password123', '1', NULL, '71368435084027629951testimonial1.png.jpeg', 'Admitted', 'Yes', 'DOC001', '1', '100', 'Yes', 'Standard'),
+(16, '323', 'Alice Johnson', 42, 'Female', 'Doctor', 'Single', '789 Oak St', 'Tribe C', 'Hinduism', 'Bob Johnson', '1122334455', 'alice.johnson@example.com', '2024-06-23', 'password789', '3', NULL, '45603262387049981157images.jpeg', 'Admitted', 'Yes', 'DOC003', '3', '150', 'Yes', 'Standard'),
+(17, '4123', 'Robert Brown', 30, 'Male', 'Lawyer', 'Married', '101 Maple St', 'Tribe D', 'Buddhism', 'Sarah Brown', '2233445566', 'robert.brown@example.com', '2024-06-23', 'password101', '4', 20, '23301970726414565898images.jpeg', 'Not Admitted', 'No', 'DOC004', '4', '250', 'No', 'Premium'),
+(18, '5', 'Emily Davis', 37, 'Female', 'Nurse', 'Single', '202 Pine St', 'Tribe E', 'Judaism', 'James Davis', '3344556677', 'emily.davis@example.com', '2024-06-23', 'password202', '5', NULL, 'photo5.jpg', 'Admitted', 'Yes', 'DOC005', '5', '300', 'Yes', 'Standard'),
+(115, '2', 'Jane Smith', 28, 'Female', 'Teacher', 'Married', '456 Elm St', 'Tribe B', 'Islam', 'John Smith', '09876543211', 'jane.smith@example.com', '2024-06-23', 'password456', '2', NULL, '3874079683549105122674893594681720531206admin3.png', 'Not Admitted', 'No', 'DOC002', '2', '200', 'No', 'Premium'),
+(116, '3', 'Alice Johnson', 42, 'Female', 'Doctor', 'Single', '789 Oak St', 'Tribe C', 'Hinduism', 'Bob Johnson', '11223344551', 'alice.johnson@example.com', '2024-06-23', 'password789', '3', NULL, '45603262387049981157images.jpeg', 'Admitted', 'Yes', 'DOC003', '3', '150', 'Yes', 'Standard'),
+(117, '4', 'Robert Brown', 30, 'Male', 'Lawyer', 'Married', '101 Maple St', 'Tribe D', 'Buddhism', 'Sarah Brown', '2233445562', 'robert.brown@example.com', '2024-06-23', 'password101', '4', 20, '67620071995438451238testimonial2.png.jpeg', 'Not Admitted', 'No', 'DOC004', '4', '250', 'No', 'Premium'),
+(118, '345678', 'Emily Davis', 37, 'Female', 'Nurse', 'Single', '202 Pine St', 'Tribe E', 'Judaism', 'James Davis', '3344556672', 'emily.davis@example.com', '2024-06-23', 'password202', '5', NULL, 'photo5.jpg', 'Admitted', 'Yes', 'DOC005', '5', '300', 'Yes', 'Standard'),
+(119, '6', 'Michael Wilson', 45, 'Male', 'Accountant', 'Married', '303 Cedar St', 'Tribe F', 'Christianity', 'Linda Wilson', '4455667788', 'michael.wilson@example.com', '2024-06-23', 'password303', '4', NULL, '4001895396324826717523301970726414565898images.jpeg', 'Not Admitted', 'No', 'DOC006', '6', '350', 'No', 'Premium'),
+(120, '7', 'Sarah Miller', 32, 'Female', 'Architect', 'Single', '404 Spruce St', 'Tribe G', 'Islam', 'Tom Miller', '5566778899', 'sarah.miller@example.com', '2024-06-23', 'password404', '12', NULL, '72065848724133506991images.jpeg', 'Admitted', 'Yes', 'DOC007', '7', '400', 'Yes', 'Standard'),
+(121, '8', 'David Lee', 29, 'Male', 'Designer', 'Single', '505 Willow St', 'Tribe H', 'Hinduism', 'Amy Lee', '6677889900', 'david.lee@example.com', '2024-06-23', 'password505', '8', NULL, 'photo8.jpg', 'Not Admitted', 'No', 'DOC008', '8', '450', 'No', 'Premium'),
+(122, '9', 'Laura Harris', 39, 'Female', 'Engineer', 'Married', '606 Birch St', 'Tribe I', 'Buddhism', 'James Harris', '7788990011', 'laura.harris@example.com', '2024-06-23', 'password606', '9', NULL, 'photo9.jpg', 'Admitted', 'Yes', 'DOC009', '9', '500', 'Yes', 'Standard'),
+(123, '10', 'Mark Young', 41, 'Male', 'Teacher', 'Single', '707 Cherry St', 'Tribe J', 'Judaism', 'Susan Young', '8899001122', 'mark.young@example.com', '2024-06-23', 'password707', '12', NULL, 'photo10.jpg', 'Not Admitted', 'No', 'DOC010', '10', '550', 'No', 'Premium'),
+(124, '11', 'Nancy King', 34, 'Female', 'Doctor', 'Married', '808 Aspen St', 'Tribe K', 'Christianity', 'John King', '9900112233', 'nancy.king@example.com', '2024-06-23', 'password808', '11', NULL, 'photo11.jpg', 'Admitted', 'Yes', 'DOC011', '11', '600', 'Yes', 'Standard'),
+(125, '12', 'Chris Scott', 36, 'Male', 'Lawyer', 'Single', '909 Walnut St', 'Tribe L', 'Islam', 'Emma Scott', '1112233445', 'chris.scott@example.com', '2024-06-23', 'password909', '4', NULL, 'photo12.jpg', 'Not Admitted', 'No', 'DOC012', '12', '650', 'No', 'Premium'),
+(126, '13', 'Patricia Lewis', 27, 'Female', 'Nurse', 'Married', '1010 Beech St', 'Tribe M', 'Hinduism', 'Michael Lewis', '1223344556', 'patricia.lewis@example.com', '2024-06-23', 'password1010', '13', NULL, 'photo13.jpg', 'Admitted', 'Yes', 'DOC013', '13', '700', 'Yes', 'Standard'),
+(127, '14', 'Steven Clark', 38, 'Male', 'Engineer', 'Single', '1111 Maple St', 'Tribe N', 'Buddhism', 'Rachel Clark', '1334455667', 'steven.clark@example.com', '2024-06-23', 'password1111', '14', NULL, 'photo14.jpg', 'Not Admitted', 'No', 'DOC014', '14', '750', 'No', 'Premium'),
+(128, '15', 'Karen Robinson', 40, 'Female', 'Teacher', 'Married', '1212 Pine St', 'Tribe O', 'Judaism', 'David Robinson', '1445566778', 'karen.robinson@example.com', '2024-06-23', 'password1212', '15', NULL, 'photo15.jpg', 'Admitted', 'Yes', 'DOC015', '15', '800', 'Yes', 'Standard'),
+(129, '16', 'Brian Walker', 31, 'Male', 'Doctor', 'Single', '1313 Cedar St', 'Tribe P', 'Christianity', 'Laura Walker', '1556677889', 'brian.walker@example.com', '2024-06-23', 'password1313', '16', NULL, 'photo16.jpg', 'Not Admitted', 'No', 'DOC016', '16', '850', 'No', 'Premium'),
+(130, '17', 'Jessica Hall', 33, 'Female', 'Lawyer', 'Married', '1414 Spruce St', 'Tribe Q', 'Islam', 'Robert Hall', '1667788990', 'jessica.hall@example.com', '2024-06-23', 'password1414', '17', NULL, 'photo17.jpg', 'Admitted', 'Yes', 'DOC017', '17', '900', 'Yes', 'Standard'),
+(131, '18', 'Kevin Allen', 44, 'Male', 'Nurse', 'Single', '1515 Willow St', 'Tribe R', 'Hinduism', 'Mary Allen', '1778899001', 'kevin.allen@example.com', '2024-06-23', 'password1515', '18', NULL, 'photo18.jpg', 'Not Admitted', 'No', 'DOC018', '18', '950', 'No', 'Premium'),
+(132, '19', 'Lisa Wright', 29, 'Female', 'Engineer', 'Married', '1616 Birch St', 'Tribe S', 'Buddhism', 'James Wright', '1889900112', 'lisa.wright@example.com', '2024-06-23', 'password1616', '19', NULL, 'photo19.jpg', 'Admitted', 'Yes', 'DOC019', '19', '1000', 'Yes', 'Standard');
 
 -- --------------------------------------------------------
 
@@ -1077,46 +1133,46 @@ CREATE TABLE `services_hospital` (
 --
 
 INSERT INTO `services_hospital` (`id`, `category_id`, `name`, `description`, `amount`) VALUES
-(2, 1, 'ECG', 'Electrocardiogram to check heart health.', 50.00),
-(3, 1, 'Echocardiogram', 'Ultrasound of the heart.', 150.00),
-(4, 2, 'EEG', 'Electroencephalogram for brain activity.', 120.00),
-(5, 2, 'MRI Brain Scan', 'Magnetic resonance imaging of the brain.', 500.00),
-(6, 3, 'Fracture Treatment', 'Care and treatment of broken bones.', 300.00),
-(7, 3, 'Joint Replacement Surgery', 'Surgical replacement of damaged joints.', 8000.00),
-(8, 4, 'Child Vaccination', 'Immunization for children.', 40.00),
-(9, 4, 'Pediatric Consultation', 'Routine check-ups for children.', 60.00),
-(10, 5, 'Skin Biopsy', 'Removal of skin tissue for examination.', 200.00),
-(11, 5, 'Acne Treatment', 'Care and treatment of acne.', 80.00),
-(12, 6, 'Vision Test', 'Eye examination to check vision.', 30.00),
-(13, 6, 'Cataract Surgery', 'Surgery to remove cataracts from the eyes.', 1200.00),
-(14, 7, 'Endoscopy', 'Examination of the digestive tract.', 400.00),
-(15, 7, 'Colon Polyp Removal', 'Surgical removal of polyps from the colon.', 600.00),
-(16, 8, 'Thyroid Function Test', 'Blood test to check thyroid function.', 70.00),
-(17, 8, 'Diabetes Management', 'Care and treatment of diabetes.', 100.00),
-(18, 9, 'Chemotherapy', 'Cancer treatment with drugs.', 1500.00),
-(19, 9, 'Radiation Therapy', 'Cancer treatment with radiation.', 2000.00),
-(20, 10, 'Pulmonary Function Test', 'Test to check lung function.', 80.00),
-(21, 10, 'Bronchoscopy', 'Procedure to view the inside of the lungs.', 700.00),
-(22, 11, 'Kidney Dialysis', 'Procedure to remove waste from the blood.', 250.00),
-(23, 11, 'Kidney Stone Removal', 'Surgical procedure to remove kidney stones.', 1500.00),
-(24, 12, 'Mental Health Counseling', 'Therapy sessions for mental health support.', 100.00),
-(25, 12, 'Psychiatric Evaluation', 'Comprehensive mental health assessment.', 200.00),
-(26, 13, 'X-ray', 'Imaging to view the inside of the body.', 50.00),
-(27, 13, 'CT Scan', 'Detailed imaging using computed tomography.', 400.00),
-(28, 14, 'Emergency Room Visit', 'Immediate medical attention for emergencies.', 150.00),
-(29, 14, 'Ambulance Service', 'Emergency transportation to the hospital.', 100.00),
-(30, 15, 'General Anesthesia', 'Anesthesia for major surgical procedures.', 500.00),
-(31, 15, 'Local Anesthesia', 'Anesthesia for minor surgical procedures.', 150.00),
-(32, 16, 'Joint Aspiration', 'Removal of fluid from a joint.', 300.00),
-(33, 16, 'Autoimmune Disease Management', 'Care and treatment of autoimmune disorders.', 250.00),
-(34, 17, 'HIV Treatment', 'Antiviral therapy for HIV.', 500.00),
-(35, 17, 'Tuberculosis Treatment', 'Care and treatment for tuberculosis.', 200.00),
-(36, 18, 'Breast Reconstruction Surgery', 'Surgery to reconstruct the breast.', 5000.00),
-(37, 18, 'Rhinoplasty', 'Cosmetic surgery to reshape the nose.', 4000.00),
-(38, 19, 'Geriatric Consultation', 'Healthcare services for elderly patients.', 60.00),
-(39, 19, 'Dementia Care', 'Specialized care for dementia patients.', 150.00),
-(40, 20, 'Root Canal Treatment', 'Dental procedure to treat infected teeth.', 300.00),
-(41, 20, 'Teeth Whitening', 'Cosmetic dental procedure to whiten teeth.', 200.00);
+(2, 1, 'ECG', 'Electrocardiogram to check heart health.', '50.00'),
+(3, 1, 'Echocardiogram', 'Ultrasound of the heart.', '150.00'),
+(4, 2, 'EEG', 'Electroencephalogram for brain activity.', '120.00'),
+(5, 2, 'MRI Brain Scan', 'Magnetic resonance imaging of the brain.', '500.00'),
+(6, 3, 'Fracture Treatment', 'Care and treatment of broken bones.', '300.00'),
+(7, 3, 'Joint Replacement Surgery', 'Surgical replacement of damaged joints.', '8000.00'),
+(8, 4, 'Child Vaccination', 'Immunization for children.', '40.00'),
+(9, 4, 'Pediatric Consultation', 'Routine check-ups for children.', '60.00'),
+(10, 5, 'Skin Biopsy', 'Removal of skin tissue for examination.', '200.00'),
+(11, 5, 'Acne Treatment', 'Care and treatment of acne.', '80.00'),
+(12, 6, 'Vision Test', 'Eye examination to check vision.', '30.00'),
+(13, 6, 'Cataract Surgery', 'Surgery to remove cataracts from the eyes.', '1200.00'),
+(14, 7, 'Endoscopy', 'Examination of the digestive tract.', '400.00'),
+(15, 7, 'Colon Polyp Removal', 'Surgical removal of polyps from the colon.', '600.00'),
+(16, 8, 'Thyroid Function Test', 'Blood test to check thyroid function.', '70.00'),
+(17, 8, 'Diabetes Management', 'Care and treatment of diabetes.', '100.00'),
+(18, 9, 'Chemotherapy', 'Cancer treatment with drugs.', '1500.00'),
+(19, 9, 'Radiation Therapy', 'Cancer treatment with radiation.', '2000.00'),
+(20, 10, 'Pulmonary Function Test', 'Test to check lung function.', '80.00'),
+(21, 10, 'Bronchoscopy', 'Procedure to view the inside of the lungs.', '700.00'),
+(22, 11, 'Kidney Dialysis', 'Procedure to remove waste from the blood.', '250.00'),
+(23, 11, 'Kidney Stone Removal', 'Surgical procedure to remove kidney stones.', '1500.00'),
+(24, 12, 'Mental Health Counseling', 'Therapy sessions for mental health support.', '100.00'),
+(25, 12, 'Psychiatric Evaluation', 'Comprehensive mental health assessment.', '200.00'),
+(26, 13, 'X-ray', 'Imaging to view the inside of the body.', '50.00'),
+(27, 13, 'CT Scan', 'Detailed imaging using computed tomography.', '400.00'),
+(28, 14, 'Emergency Room Visit', 'Immediate medical attention for emergencies.', '150.00'),
+(29, 14, 'Ambulance Service', 'Emergency transportation to the hospital.', '100.00'),
+(30, 15, 'General Anesthesia', 'Anesthesia for major surgical procedures.', '500.00'),
+(31, 15, 'Local Anesthesia', 'Anesthesia for minor surgical procedures.', '150.00'),
+(32, 16, 'Joint Aspiration', 'Removal of fluid from a joint.', '300.00'),
+(33, 16, 'Autoimmune Disease Management', 'Care and treatment of autoimmune disorders.', '250.00'),
+(34, 17, 'HIV Treatment', 'Antiviral therapy for HIV.', '500.00'),
+(35, 17, 'Tuberculosis Treatment', 'Care and treatment for tuberculosis.', '200.00'),
+(36, 18, 'Breast Reconstruction Surgery', 'Surgery to reconstruct the breast.', '5000.00'),
+(37, 18, 'Rhinoplasty', 'Cosmetic surgery to reshape the nose.', '4000.00'),
+(38, 19, 'Geriatric Consultation', 'Healthcare services for elderly patients.', '60.00'),
+(39, 19, 'Dementia Care', 'Specialized care for dementia patients.', '150.00'),
+(40, 20, 'Root Canal Treatment', 'Dental procedure to treat infected teeth.', '300.00'),
+(41, 20, 'Teeth Whitening', 'Cosmetic dental procedure to whiten teeth.', '200.00');
 
 -- --------------------------------------------------------
 
@@ -1183,7 +1239,7 @@ CREATE TABLE `staffs_accounts` (
 --
 
 INSERT INTO `staffs_accounts` (`id`, `staff_id`, `username`, `firstname`, `lastname`, `age`, `qualification`, `department_id`, `occupation`, `sex`, `marital_status`, `phone`, `email_address`, `password`, `next_of_kin`, `religion`, `tribe`, `salary`, `state_of_origin`, `nationality`, `photo`, `specialist_id`, `access_level_id`, `date_added`, `address`, `login_sec`, `hmo_key`) VALUES
-(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'e1dcb518fc6f3f8b33b8360cbb8add82eb04974d34830dd827c5dc832a657c64', 4),
+(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, '108d5d8d9a29376c4349da2dd25689e3f6cb5b35332a941ab37a451356ddb37e', 4),
 (37, '6968', 'Darlington4334', 'Darlington', 'Markswell', NULL, NULL, 9, NULL, 'Female', 'Divorced', '+133-344-333-234', 'markswql32@gmail.com', '$2y$10$17Gl9nwUUj0IvfX.dtD7/.ePRdVzkrPnrakBe4Kxeln7YNCyFXgoG', NULL, NULL, NULL, 0, NULL, NULL, '19263249508507174638profilepicture-2-portrait-head.jpeg', 11, 3, '2024-03-04 19:09:38', NULL, NULL, NULL),
 (38, '7103', 'jude230404', 'James', 'Judes', NULL, 'doc', 5, 'test', 'Male', 'Single', '+1-959-434-333', 'jude@gmail.com', '12345678', 'test1', 'Islam', 'test2', 0, 'test3', 'test4', '59036974417032658281testimonial3.png', 5, 1, '2024-03-04 19:11:01', '', 'c855490cca3c62647712b70accc1649160369495aa67ef5f2d5cb962a19dc4d6', 3),
 (40, '11910', 'Ijeoma23323', 'Peter', 'Ijeoma', NULL, NULL, 1, NULL, 'Female', 'Single', '+55-959-434-333', 'Ijeoma@gmail.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, '96900264384358715127favicon.png', 5, 6, '2024-03-04 19:20:53', '', NULL, NULL),
@@ -1212,6 +1268,23 @@ CREATE TABLE `transactions_account` (
   `to_acc` int(11) NOT NULL DEFAULT 0,
   `end_of_day` varchar(30) NOT NULL DEFAULT 'no',
   `description` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vaccinations`
+--
+
+CREATE TABLE `vaccinations` (
+  `id` int(11) NOT NULL,
+  `patient_id` varchar(255) NOT NULL,
+  `vaccination_name` varchar(255) NOT NULL,
+  `date_given` date NOT NULL,
+  `next_due_date` date DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1292,6 +1365,12 @@ ALTER TABLE `drugs_list`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `drug_admin`
+--
+ALTER TABLE `drug_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `drug_brand_category`
 --
 ALTER TABLE `drug_brand_category`
@@ -1301,6 +1380,12 @@ ALTER TABLE `drug_brand_category`
 -- Indexes for table `drug_category`
 --
 ALTER TABLE `drug_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `drug_charting`
+--
+ALTER TABLE `drug_charting`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1477,6 +1562,12 @@ ALTER TABLE `transactions_account`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `vaccinations`
+--
+ALTER TABLE `vaccinations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `wards`
 --
 ALTER TABLE `wards`
@@ -1529,6 +1620,12 @@ ALTER TABLE `drugs_list`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT for table `drug_admin`
+--
+ALTER TABLE `drug_admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
 -- AUTO_INCREMENT for table `drug_brand_category`
 --
 ALTER TABLE `drug_brand_category`
@@ -1539,6 +1636,12 @@ ALTER TABLE `drug_brand_category`
 --
 ALTER TABLE `drug_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `drug_charting`
+--
+ALTER TABLE `drug_charting`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `drug_supplier`
@@ -1709,10 +1812,26 @@ ALTER TABLE `transactions_account`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `vaccinations`
+--
+ALTER TABLE `vaccinations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `wards`
 --
 ALTER TABLE `wards`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `drug_charting`
+--
+ALTER TABLE `drug_charting`
+  ADD CONSTRAINT `fk_drug_id` FOREIGN KEY (`drug_id`) REFERENCES `drugs_list` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

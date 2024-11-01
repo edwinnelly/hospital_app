@@ -102,73 +102,73 @@ foreach ($get_data_details as $data)
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT dc.id, dc.drug_id, dc.status, dc.frequency, dc.doses, dc.chart_date, dc.comment, dl.drugs_name FROM drug_charting dc JOIN drugs_list dl ON dc.drug_id = dl.id WHERE dc.patient_id = '$get_staff_id'";
+                                                    $sql = "SELECT dc.id, dc.drug_id, dc.status, dc.frequency, dc.doses, dc.chart_date, dc.comment, dl.drugs_name FROM drug_charting dc JOIN drugs_list dl ON dc.drug_id = dl.id WHERE dc.patient_id = '$get_staff_id' AND dc.drug_id='$get_drug'";
                                                     $fetch_dpt = $app->fetch_query($sql);
                                                     $sn = 1;
                                                     foreach ($fetch_dpt as $fetch) {
-                                                    
-                                                    ?>
-                                                    <tr>
-                                                        <td>
-                                                            <?= $sn++; ?>
-                                                        </td>
-                                                        <td>
-                                                            <p class="">
-                                                                <?php echo $fetch['drugs_name']?>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="">
-                                                            <?php echo $fetch['doses']?>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="">
-                                                            <?php echo $fetch['frequency']?>
-                                                            </p>
-                                                        </td>
 
-                                                        <td>
-                                                            <p class="mb-0">
-                                                            <?php echo $fetch['chart_date']?>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0">
-                                                            <?php
-                                                                if ($fetch['status'] == 'charted') {
-                                                                    echo "<span class='bg-warning p-1 rounded text-white'>Charted</span>";
-                                                                } elseif ($fetch['status'] == 'started') {
-                                                                    echo "<span class='bg-primary p-1 rounded text-white'>Started</span>";
-                                                                } elseif ($fetch['status'] == 'discontinued') {
-                                                                    echo "<span class='bg-danger p-1 rounded text-white'>Discontinued</span>";
-                                                                } elseif ($fetch['status'] == 'completed') {
-                                                                    echo "<span class='bg-success p-1 rounded text-white'>Completed</span>";
-                                                                }
-                                                                ?>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <p class="mb-0">
-                                                            <?php echo $fetch['comment']?>
-                                                            </p>
-                                                        </td>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    Action
-                                                                </button>
-                                                                <ul class="dropdown-menu">
-                                                                    <li><a class="dropdown-item delete_emp" href="#">Chart Drug</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Skip Dose</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Discontinue Medication</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                    ?>
+                                                        <tr>
+                                                            <td>
+                                                                <?= $sn++; ?>
+                                                            </td>
+                                                            <td>
+                                                                <p class="">
+                                                                    <?php echo $fetch['drugs_name'] ?>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="">
+                                                                    <?php echo $fetch['doses'] ?>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="">
+                                                                    <?php echo $fetch['frequency'] ?>
+                                                                </p>
+                                                            </td>
+
+                                                            <td>
+                                                                <p class="mb-0">
+                                                                    <?php echo $fetch['chart_date'] ?>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="mb-0">
+                                                                    <?php
+                                                                    if ($fetch['status'] == 'charted') {
+                                                                        echo "<span class='bg-warning p-1 rounded text-white'>Charted</span>";
+                                                                    } elseif ($fetch['status'] == 'skipped') {
+                                                                        echo "<span class='bg-secondary p-1 rounded text-white'>Skipped</span>";
+                                                                    } elseif ($fetch['status'] == 'discontinued') {
+                                                                        echo "<span class='bg-danger p-1 rounded text-white'>Discontinued</span>";
+                                                                    } elseif ($fetch['status'] == 'completed') {
+                                                                        echo "<span class='bg-success p-1 rounded text-white'>Completed</span>";
+                                                                    }
+                                                                    ?>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <p class="mb-0">
+                                                                    <?php echo $fetch['comment'] ?>
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Action
+                                                                    </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <!-- <li><a class="dropdown-item delete_emp" href="#">Chart Drug</a></li> -->
+                                                                        <li><a class="dropdown-item delete_emp" data-id="<?php echo $fetch['id'] ?>" data-emp_name="<?php echo $fetch['drugs_name'] ?>">Skip Dose</a></li>
+                                                                        <li><a class="dropdown-item" href="#">Discontinue Medication</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     <?php
                                                     }
-                                                    
+
                                                     ?>
 
                                                 </tbody>
@@ -271,6 +271,79 @@ foreach ($get_data_details as $data)
             });
         });
     </script>
+
+    <script>
+    $(document).on('click', '.delete_emp', function() {
+    // Fetch data from data attribute
+    const id = $(this).attr("data-id");
+    const emp_name = $(this).attr("data-emp_name");
+
+    // Show in text field
+    $("#emp_name").val(emp_name);
+    $("#ids").val(id);
+
+    // Call modal
+    $('#newmodals').modal('show');
+
+    $("#delete_emps").off('click').on('click', function() { // Use .off() to prevent duplicate event binding
+        const id_dels = $("#ids").val();
+
+        // Disable the button
+        const btn = $("#delete_emps");
+        btn.attr('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Deleting...');
+
+        // Validate and call Ajax
+        if (id_dels === '' || id_dels === 0) {
+            Swal.fire({
+                title: "Error!",
+                text: "Invalid request, please try again!",
+                icon: "error",
+            });
+            btn.attr('disabled', false).html('Skip Dose');
+        } else {
+            $.ajax({
+                url: "ajax/skipped-doses.php",  // Make sure the file path is correct
+                method: "POST",
+                data: {
+                    ids: ids
+                },
+                success: function(data) {
+                    alert(data);
+                    if (data.trim() === 'success') {
+                        // Hide modal
+                        $('#newmodals').modal('hide');
+
+                        Swal.fire({
+                            title: "Success!",
+                            text: "Dose skipped successfully!",
+                            icon: "success",
+                        });
+
+                        setTimeout(function() {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Something went wrong!",
+                            icon: "error",
+                        });
+                        btn.attr('disabled', false).html('Skip Dose');
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "AJAX request failed!",
+                        icon: "error",
+                    });
+                    btn.attr('disabled', false).html('Skip Dose');
+                }
+            });
+        }
+    });
+});
+    </script>
 </body>
 
 </html>
@@ -323,8 +396,8 @@ foreach ($get_data_details as $data)
                     <div class="col-lg-12">
                         <div class="mt-3 form-group">
                             <label class="mb-3 fw-bold">Drug Name</label>
-                           <input type="text" value="<?= $get_drug_name ?>"  class="form-control" readonly>
-                           <input type="hidden" value="<?= $get_drug ?>" name="id_del" class="form-control">
+                            <input type="text" value="<?= $get_drug_name ?>" class="form-control" readonly>
+                            <input type="hidden" value="<?= $get_drug ?>" name="id_del" class="form-control">
                         </div>
 
                         <div class="form-group">
@@ -341,7 +414,7 @@ foreach ($get_data_details as $data)
                         </div>
                         <div class="form-group">
                             <label>Comment</label>
-                           <textarea name="comments" id="" cols="20" rows="10" class="form-control"></textarea>
+                            <textarea name="comments" id="" cols="20" rows="10" class="form-control"></textarea>
                         </div>
                     </div>
             </div>
@@ -350,6 +423,28 @@ foreach ($get_data_details as $data)
                 <button type="button" class="btn btn-danger btn-simple waves-effect" data-dismiss="modal">X</button>
             </div>
             </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="newmodals" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="title" id="defaultModalLabel">Do You Want To Skip The Dose For Today?</h5>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="emp_name" readonly>
+                        <input type="text" class="form-control"  id="ids" >
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success btn-simple waves-effect" id="delete_emps">Skip Dose</button>
+                <button type="button" class="btn btn-danger btn-simple waves-effect" data-bs-dismiss="modal">X</button>
+            </div>
         </div>
     </div>
 </div>

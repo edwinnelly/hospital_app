@@ -179,10 +179,8 @@ foreach ($get_data_details as $data)
                                                                     </button>
                                                                     <ul class="dropdown-menu">
                                                                         <li><a class="dropdown-item" href="drug-chart?fid=<?php echo base64_encode($get_staff_id); ?>&&did=<?php echo base64_encode($fetch['drug_id']); ?>&&nam=<?php echo base64_encode($fetch['drugs_name']); ?>">Chart Drug</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Skip Dose</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Discontinue Medication</a></li>
                                                                         <li><a class="dropdown-item" href="#">View Vaccination</a></li>
-                                                                        <a class="dropdown-item delete_emp"href="#" data-emp_name="<?php echo $fetch['drugs_name']; ?>" data-id="<?php echo $fetch['id']; ?>">Delete Prescription</a>
+                                                                       <li><a class="dropdown-item delete_emp"href="#" data-emp_name="<?php echo $fetch['drugs_name']; ?>" data-id="<?php echo $fetch['id']; ?>">Delete Prescription</a></li> 
                                                                     </ul>
                                                                 </div>
                                                             </td>
