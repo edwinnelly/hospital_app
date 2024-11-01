@@ -273,7 +273,7 @@ foreach ($get_data_details as $data)
     </script>
 
     <script>
-    $(document).on('click', '.delete_emp', function() {
+   $(document).on('click', '.delete_emp', function() {
     // Fetch data from data attribute
     const id = $(this).attr("data-id");
     const emp_name = $(this).attr("data-emp_name");
@@ -291,7 +291,7 @@ foreach ($get_data_details as $data)
         // Disable the button
         const btn = $("#delete_emps");
         btn.attr('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Deleting...');
-
+        console.log("ID to delete:", id_dels);
         // Validate and call Ajax
         if (id_dels === '' || id_dels === 0) {
             Swal.fire({
@@ -302,10 +302,10 @@ foreach ($get_data_details as $data)
             btn.attr('disabled', false).html('Skip Dose');
         } else {
             $.ajax({
-                url: "ajax/skipped-doses.php",  // Make sure the file path is correct
+                url: "ajax/skipped-doses",  // Make sure the file path is correct
                 method: "POST",
                 data: {
-                    ids: ids
+                    id_dels: id_dels
                 },
                 success: function(data) {
                     alert(data);
@@ -343,6 +343,7 @@ foreach ($get_data_details as $data)
         }
     });
 });
+
     </script>
 </body>
 
@@ -436,7 +437,7 @@ foreach ($get_data_details as $data)
                 <div class="col-md-6">
                     <div class="form-group">
                         <input type="text" class="form-control" id="emp_name" readonly>
-                        <input type="text" class="form-control"  id="ids" >
+                        <input type="hidden" class="form-control" id="ids">
                     </div>
                 </div>
             </div>
