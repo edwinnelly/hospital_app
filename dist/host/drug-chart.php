@@ -308,7 +308,6 @@ foreach ($get_data_details as $data)
                     id_dels: id_dels
                 },
                 success: function(data) {
-                    alert(data);
                     if (data.trim() === 'success') {
                         // Hide modal
                         $('#newmodals').modal('hide');
