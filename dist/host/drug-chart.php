@@ -137,11 +137,11 @@ foreach ($get_data_details as $data)
                                                                 <p class="mb-0">
                                                                     <?php
                                                                     if ($fetch['status'] == 'charted') {
-                                                                        echo "<span class='bg-warning p-1 rounded text-white'>Charted</span>";
+                                                                        echo "<span class='bg-success p-1 rounded text-white'>Charted</span>";
                                                                     } elseif ($fetch['status'] == 'skipped') {
-                                                                        echo "<span class='bg-secondary p-1 rounded text-white'>Skipped</span>";
+                                                                        echo "<span class='bg-danger p-1 rounded text-white'>Skipped</span>";
                                                                     } elseif ($fetch['status'] == 'discontinued') {
-                                                                        echo "<span class='bg-danger p-1 rounded text-white'>Discontinued</span>";
+                                                                        echo "<span class='bg-gray p-1 rounded text-white'>Discontinued</span>";
                                                                     } elseif ($fetch['status'] == 'completed') {
                                                                         echo "<span class='bg-success p-1 rounded text-white'>Completed</span>";
                                                                     }
@@ -160,8 +160,9 @@ foreach ($get_data_details as $data)
                                                                     </button>
                                                                     <ul class="dropdown-menu">
                                                                         <!-- <li><a class="dropdown-item delete_emp" href="#">Chart Drug</a></li> -->
-                                                                        <li><a class="dropdown-item delete_emp" data-id="<?php echo $fetch['id'] ?>" data-emp_name="<?php echo $fetch['drugs_name'] ?>">Skip Dose</a></li>
-                                                                        <li><a class="dropdown-item" href="#">Discontinue Medication</a></li>
+                                                                        <li style="cursor:pointer;"><a class="dropdown-item delete_emps" data-drug-id="<?=$fetch['id']?>" data-emp_namers="<?= $fetch['drugs_name']?>" data-status="<?= $fetch['status']?>">
+                                                                        Skip Dose</a></li>
+                                                                        
                                                                     </ul>
                                                                 </div>
                                                             </td>
@@ -271,79 +272,75 @@ foreach ($get_data_details as $data)
             });
         });
     </script>
+  <script>
+        $(document).on('click', '.delete_emps', function() {
 
-    <script>
-   $(document).on('click', '.delete_emp', function() {
-    // Fetch data from data attribute
-    const id = $(this).attr("data-id");
-    const emp_name = $(this).attr("data-emp_name");
+            const id = $(this).attr("data-drug-id");
+            const emp_name = $(this).attr("data-emp_namers");
 
-    // Show in text field
-    $("#emp_name").val(emp_name);
-    $("#ids").val(id);
+            $("#emp_namers").val(emp_name);
+            $("#idss").val(id);
 
-    // Call modal
-    $('#newmodals').modal('show');
+            $('#newmodals').modal('show');
 
-    $("#delete_emps").off('click').on('click', function() { // Use .off() to prevent duplicate event binding
-        const id_dels = $("#ids").val();
+            $("#delete_emps").off('click').on('click', function() {
+                const id_dels = $("#idss").val();
 
-        // Disable the button
-        const btn = $("#delete_emps");
-        btn.attr('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Deleting...');
-        console.log("ID to delete:", id_dels);
-        // Validate and call Ajax
-        if (id_dels === '' || id_dels === 0) {
-            Swal.fire({
-                title: "Error!",
-                text: "Invalid request, please try again!",
-                icon: "error",
-            });
-            btn.attr('disabled', false).html('Skip Dose');
-        } else {
-            $.ajax({
-                url: "ajax/skipped-doses",  // Make sure the file path is correct
-                method: "POST",
-                data: {
-                    id_dels: id_dels
-                },
-                success: function(data) {
-                    if (data.trim() === 'success') {
-                        // Hide modal
-                        $('#newmodals').modal('hide');
-
-                        Swal.fire({
-                            title: "Success!",
-                            text: "Dose skipped successfully!",
-                            icon: "success",
-                        });
-
-                        setTimeout(function() {
-                            location.reload();
-                        }, 3000);
-                    } else {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Something went wrong!",
-                            icon: "error",
-                        });
-                        btn.attr('disabled', false).html('Skip Dose');
-                    }
-                },
-                error: function() {
+                // Disable the button
+                const btn = $("#delete_emps");
+                btn.attr('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> Processing...');
+                // Validate and call Ajax
+                if (id_dels === '' || id_dels === 0) {
                     Swal.fire({
                         title: "Error!",
-                        text: "AJAX request failed!",
+                        text: "Invalid request, please try again!",
                         icon: "error",
                     });
                     btn.attr('disabled', false).html('Skip Dose');
+                } else {
+                    $.ajax({
+                        url: "ajax/skipped-doses",
+                        method: "POST",
+                        data: {
+                            id_dels: id_dels
+                        },
+                        success: function(data) {
+                            if (data.trim() === 'success') {
+                                // Hide modal
+                                $('#newmodals').modal('hide');
+
+                                Swal.fire({
+                                    title: "Success!",
+                                    text: "Dose skipped successfully!",
+                                    icon: "success",
+                                });
+
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                            } else {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Something went wrong!",
+                                    icon: "error",
+                                });
+                                btn.attr('disabled', false).html('Skip Dose');
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "AJAX request failed!",
+                                icon: "error",
+                            });
+                            btn.attr('disabled', false).html('Skip Dose');
+                        }
+                    });
                 }
             });
-        }
-    });
-});
-
+        });
     </script>
+ 
 </body>
 
 </html>
@@ -414,7 +411,7 @@ foreach ($get_data_details as $data)
                         </div>
                         <div class="form-group">
                             <label>Comment</label>
-                            <textarea name="comments" id="" cols="20" rows="10" class="form-control"></textarea>
+                            <textarea name="comments" id="" cols="20" rows="10" class="form-control" placeholder="Write a comment"></textarea>
                         </div>
                     </div>
             </div>
@@ -435,8 +432,8 @@ foreach ($get_data_details as $data)
             <div class="modal-body">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="emp_name" readonly>
-                        <input type="hidden" class="form-control" id="ids">
+                        <input type="text" class="form-control" id="emp_namers" readonly>
+                        <input type="hidden" class="form-control" id="idss">
                     </div>
                 </div>
             </div>

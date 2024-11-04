@@ -162,10 +162,10 @@ foreach ($get_data_details as $data)
                                                                 <?php
                                                                 if ($fetch['status'] == 'no') {
                                                                     echo "<span class='bg-warning p-1 rounded text-white'>To Start</span>";
-                                                                } elseif ($fetch['status'] == 'started') {
-                                                                    echo "<span class='bg-primary p-1 rounded text-white'>Started</span>";
+                                                                } elseif ($fetch['status'] == 'skipped') {
+                                                                    echo "<span class='bg-primary p-1 rounded text-white'>Skipped</span>";
                                                                 } elseif ($fetch['status'] == 'discontinued') {
-                                                                    echo "<span class='bg-danger p-1 rounded text-white'>Discontinued</span>";
+                                                                    echo "<span class='bg-gray p-1 rounded text-white'>Discontinued</span>";
                                                                 } elseif ($fetch['status'] == 'completed') {
                                                                     echo "<span class='bg-success p-1 rounded text-white'>Completed</span>";
                                                                 }
@@ -178,9 +178,18 @@ foreach ($get_data_details as $data)
                                                                         Action
                                                                     </button>
                                                                     <ul class="dropdown-menu">
-                                                                        <li><a class="dropdown-item" href="drug-chart?fid=<?php echo base64_encode($get_staff_id); ?>&&did=<?php echo base64_encode($fetch['drug_id']); ?>&&nam=<?php echo base64_encode($fetch['drugs_name']); ?>">Chart Drug</a></li>
+                                                                        <!-- <li><a class="dropdown-item" href="drug-chart?fid=<?php echo base64_encode($get_staff_id); ?>&&did=<?php echo base64_encode($fetch['drug_id']); ?>&&nam=<?php echo base64_encode($fetch['drugs_name']); ?>">Chart Drug</a></li> -->
+                                                                        <li>
+                                                                            <?php if ($fetch['status'] == 'discontinued'): ?>
+                                                                                <a class="dropdown-item disabled" href="#" onclick="return false;">Chart Drug</a>
+                                                                            <?php else: ?>
+                                                                                <a class="dropdown-item" href="drug-chart?fid=<?php echo base64_encode($get_staff_id); ?>&&did=<?php echo base64_encode($fetch['drug_id']); ?>&&nam=<?php echo base64_encode($fetch['drugs_name']); ?>">Chart Drug</a>
+                                                                            <?php endif; ?>
+                                                                        </li>
+                                                                   
+                                                                        <li><a class="dropdown-item discontinue" style="cursor:pointer;" data-ids="<?php echo $fetch['id'] ?>" data-emp_names="<?php echo $fetch['drugs_name'] ?>">Discontinue Medication</a></li>
                                                                         <li><a class="dropdown-item" href="#">View Vaccination</a></li>
-                                                                       <li><a class="dropdown-item delete_emp"href="#" data-emp_name="<?php echo $fetch['drugs_name']; ?>" data-id="<?php echo $fetch['id']; ?>">Delete Prescription</a></li> 
+                                                                        <li><a class="dropdown-item delete_emp" href="#" data-emp_name="<?php echo $fetch['drugs_name']; ?>" data-id="<?php echo $fetch['id']; ?>">Delete Prescription</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </td>
@@ -292,8 +301,8 @@ foreach ($get_data_details as $data)
             });
         });
     </script>
-  <script>
-        $(document).on('click', '.delete_emp', function () {
+    <script>
+        $(document).on('click', '.delete_emp', function() {
             //fetch data from data attribute
             const id = $(this).attr("data-id");
             const emp_name = $(this).attr("data-emp_name");
@@ -305,7 +314,7 @@ foreach ($get_data_details as $data)
             //call  modal
             $('#newmodal').modal('show');
 
-            $("#delete_emp").click(function () {
+            $("#delete_emp").click(function() {
                 const emp_name_del = $("#emp_name").val();
                 const id_del = $("#id").val();
 
@@ -329,7 +338,7 @@ foreach ($get_data_details as $data)
                         data: {
                             id_del: id_del
                         },
-                        success: function (data) {
+                        success: function(data) {
                             if (data.trim() == 'success') {
 
                                 //hide  modal
@@ -341,7 +350,7 @@ foreach ($get_data_details as $data)
                                     icon: "success",
                                 });
 
-                                setTimeout(function () {
+                                setTimeout(function() {
                                     location.reload();
                                 }, 3000);
 
@@ -354,6 +363,77 @@ foreach ($get_data_details as $data)
 
             });
 
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.discontinue', function() {
+            // Fetch data from data attribute
+            const id = $(this).attr("data-ids");
+            const emp_name = $(this).attr("data-emp_names");
+
+            // Show in text field
+            $("#emp_names").val(emp_name);
+            $("#drug_id").val(id);
+
+            // Call modal
+            $('#discon').modal('show');
+
+            $("#discontinue").off('click').on('click', function() { // Use .off() to prevent duplicate event binding
+                const id = $("#drug_id").val();
+
+                // Disable the button
+                const btn = $("#discontinue");
+                btn.attr('disabled', true).html('<i class="fa fa-spin fa-spinner"></i> processing...');
+                // Validate and call Ajax
+                if (id === '' || id === 0) {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Invalid request, please try again!",
+                        icon: "error",
+                    });
+                    btn.attr('disabled', false).html('Dose Discontinued');
+                } else {
+                    $.ajax({
+                        url: "ajax/discontinued", // Make sure the file path is correct
+                        method: "POST",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                            if (data.trim() === 'success') {
+                                // Hide modal
+                                $('#newmodals').modal('hide');
+
+                                Swal.fire({
+                                    title: "Success!",
+                                    text: "Dose discontinued successfully!",
+                                    icon: "success",
+                                });
+
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 3000);
+                            } else {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Something went wrong!",
+                                    icon: "error",
+                                });
+                                btn.attr('disabled', false).html('Dose Discontinued');
+                            }
+                        },
+                        error: function() {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "AJAX request failed!",
+                                icon: "error",
+                            });
+                            btn.attr('disabled', false).html('Dose Discontinued');
+                        }
+                    });
+                }
+            });
         });
     </script>
 </body>
@@ -471,6 +551,29 @@ foreach ($get_data_details as $data)
             </div>
             </form>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="discon" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="title" id="defaultModalLabel">Do You Want To Discontinue This Dose?</h5>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="emp_names" readonly>
+                        <input type="hidden" class="form-control" id="drug_id">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success btn-simple waves-effect" id="discontinue">Discontinue Dose</button>
+                <button type="button" class="btn btn-danger btn-simple waves-effect" data-bs-dismiss="modal">X</button>
+            </div>
         </div>
     </div>
 </div>
