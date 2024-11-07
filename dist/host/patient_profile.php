@@ -100,8 +100,9 @@ foreach ($get_data_details as $data);
                                                                 ">Referrals</a>
                                         </li>
 
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="">Medical
+                                        <li class="nav-item"><a class="nav-link"  href="medical_report?fid=<?php echo base64_encode($get_staff_id); ?>">Medical
                                                 Reports</a></li>
+                                        <li class="nav-item"><a class="nav-link"  href="comment?fid=<?php echo base64_encode($get_staff_id); ?>">Comment</a></li>
 
                                         <li class="nav-item"><a class="nav-link" href="discharge_summary.php?fid=<?php echo $get_staff_id; ?>&&st=<?php echo base64_encode(rand(13323, 3233939)); ?>">Discharge
                                                 Summary</a></li>

@@ -94,7 +94,7 @@ $get_staff_id = $app->get_request('fid');
             <div class="container">
                 
             <?php   
-            include"component/patient_profile_header.php";
+            include "component/patient_profile_header.php";
                 ?>
 
 

@@ -1,11 +1,9 @@
 <?php
 //sql command
-$query = "SELECT * FROM patient_data JOIN hmo ON patient_data.hmo_id = hmo.id WHERE patient_data.pid=$get_staff_id";
+$query = "SELECT * FROM patient_data JOIN hmo ON patient_data.hmo_id = hmo.id WHERE patient_data.pid= '$get_staff_id'";
 $get_data_details = $app->fetch_query($query);
 foreach ($get_data_details as $data)
-    ;
-
-    ?>
+ ?>
 
 <div class="card client-detail">
     <div class="body d-flex">
