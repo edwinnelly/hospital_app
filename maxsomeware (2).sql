@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2024 at 07:20 PM
+-- Generation Time: Nov 09, 2024 at 08:00 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -161,6 +161,20 @@ INSERT INTO `asset` (`asset_id`, `asset_name`, `asset_type`, `purchase_date`, `p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(15) NOT NULL,
+  `report_info` longtext DEFAULT NULL,
+  `doc_id` varchar(15) DEFAULT NULL,
+  `pid` varchar(15) DEFAULT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `department`
 --
 
@@ -211,8 +225,7 @@ INSERT INTO `discharge_summary` (`id`, `report_info`, `doc_id`, `pid`, `created_
 (15, 'Explanation:\nWidth and Height: Sets the overall dimensions of the textarea.\nPadding: Adds space inside the textarea for better text readability.\nFont and Text Styling: Defines the font family, size, line height, and text color.\nBackground and Border: Sets the background color, border style, and border radius for rounded corners.\nBox Shadow: Adds a subtle shadow for a more modern look.\nResize: Limits resizing to vertical only.\nFocus State: Changes the border color and adds a shadow when the textarea is focused.\nPlaceholder Styling: Styles the placeholder text for consistency.\nResult:\nThis CSS will give your &lt;textarea&gt; a clean, modern look with responsive and user-friendly styles. The focus styles provide visual feedback when the textarea is active, enhancing the user experience.', 8702, 9342, '2024-06-02 15:27:38'),
 (16, '- **Energy Consumption:**\n  - If your energy consumption is lower than the daily production of 6375 Wh, the batteries might reach full charge over multiple days.\n  \n- **Weather Variability:**\n  - Solar energy production can vary based on weather conditions. It’s important to consider this variability and possibly have an additional energy source or more panels to ensure reliability.\n\n### Summary:\n\nFive 300-watt solar panels can charge a 24V 400Ah battery bank, but they won&#039;t be able to fully charge it in one day if the battery bank is significantly discharged. For optimal performance and to ensure the batteries remain charged, you might need additional solar panels or reduced energy consumption.', 8702, 9342, '2024-06-02 15:30:25'),
 (18, 'It’s important to ensure the batteries are not deeply discharged too often, as this can reduce their lifespan.', 8702, 11029, '2024-06-02 15:33:16'),
-(19, 'Hello Edwin,\n\n \n\nWe would like to inform you of a recent directive issued by the Central Bank of Nigeria (CBN) regarding changes in collateral policy for Naira loans. According to the CBN circular: BSD/DIR/PUB/LAB/017/004, loans currently secured with dollar-denominated collateral are now prohibited, except under specific circumstances.\n\n  \n\nIf you currently have a loan secured with such collateral, you are required to pay it off completely within 90 days (approximately 3 months). \n\n \n\nForeign currency collateral can only be used for Naira loans in cases where the collateral is in the form of: \n\nEurobonds issued by the Federal Government of Nigeria \nGuarantees provided by foreign banks, including Standby Letters of Credit', 8702, 7938, '2024-06-02 18:31:12'),
-(21, 'jmghnfgbdgrhg', 8702, 11919, '2024-11-04 19:18:25');
+(19, 'Hello Edwin,\n\n \n\nWe would like to inform you of a recent directive issued by the Central Bank of Nigeria (CBN) regarding changes in collateral policy for Naira loans. According to the CBN circular: BSD/DIR/PUB/LAB/017/004, loans currently secured with dollar-denominated collateral are now prohibited, except under specific circumstances.\n\n  \n\nIf you currently have a loan secured with such collateral, you are required to pay it off completely within 90 days (approximately 3 months). \n\n \n\nForeign currency collateral can only be used for Naira loans in cases where the collateral is in the form of: \n\nEurobonds issued by the Federal Government of Nigeria \nGuarantees provided by foreign banks, including Standby Letters of Credit', 8702, 7938, '2024-06-02 18:31:12');
 
 -- --------------------------------------------------------
 
@@ -842,6 +855,28 @@ INSERT INTO `leave_request` (`id`, `emp_id`, `leave_type`, `date1`, `date2`, `re
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `medical_report`
+--
+
+CREATE TABLE `medical_report` (
+  `id` int(15) NOT NULL,
+  `doc_id` int(50) DEFAULT NULL,
+  `report_info` longtext DEFAULT NULL,
+  `created_at` date DEFAULT current_timestamp(),
+  `pid` varchar(225) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `medical_report`
+--
+
+INSERT INTO `medical_report` (`id`, `doc_id`, `report_info`, `created_at`, `pid`) VALUES
+(9, 8702, 'hello world', '2024-11-07', '11919'),
+(10, 8702, 'hello', '2024-11-07', '11919');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `patient_data`
 --
 
@@ -1259,7 +1294,7 @@ CREATE TABLE `staffs_accounts` (
 --
 
 INSERT INTO `staffs_accounts` (`id`, `staff_id`, `username`, `firstname`, `lastname`, `age`, `qualification`, `department_id`, `occupation`, `sex`, `marital_status`, `phone`, `email_address`, `password`, `next_of_kin`, `religion`, `tribe`, `salary`, `state_of_origin`, `nationality`, `photo`, `specialist_id`, `access_level_id`, `date_added`, `address`, `login_sec`, `hmo_key`) VALUES
-(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, '7d94b20d10d55c40c360f904b9bf19b32cc08ab3807d203359ad635f13aa2063', 4),
+(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'c2993ebe10863d74dc4baf760ce587cfdcc683def948056aad7ae5b9c41bb78d', 4),
 (37, '6968', 'Darlington4334', 'Darlington', 'Markswell', NULL, NULL, 9, NULL, 'Female', 'Divorced', '+133-344-333-234', 'markswql32@gmail.com', '$2y$10$17Gl9nwUUj0IvfX.dtD7/.ePRdVzkrPnrakBe4Kxeln7YNCyFXgoG', NULL, NULL, NULL, 0, NULL, NULL, '19263249508507174638profilepicture-2-portrait-head.jpeg', 11, 3, '2024-03-04 19:09:38', NULL, NULL, NULL),
 (38, '7103', 'jude230404', 'James', 'Judes', NULL, 'doc', 5, 'test', 'Male', 'Single', '+1-959-434-333', 'jude@gmail.com', '12345678', 'test1', 'Islam', 'test2', 0, 'test3', 'test4', '59036974417032658281testimonial3.png', 5, 1, '2024-03-04 19:11:01', '', 'c855490cca3c62647712b70accc1649160369495aa67ef5f2d5cb962a19dc4d6', 3),
 (40, '11910', 'Ijeoma23323', 'Peter', 'Ijeoma', NULL, NULL, 1, NULL, 'Female', 'Single', '+55-959-434-333', 'Ijeoma@gmail.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, '96900264384358715127favicon.png', 5, 6, '2024-03-04 19:20:53', '', NULL, NULL),
@@ -1365,6 +1400,12 @@ ALTER TABLE `appointment`
 --
 ALTER TABLE `asset`
   ADD PRIMARY KEY (`asset_id`);
+
+--
+-- Indexes for table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `department`
@@ -1511,6 +1552,12 @@ ALTER TABLE `leave_request`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `medical_report`
+--
+ALTER TABLE `medical_report`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `patient_data`
 --
 ALTER TABLE `patient_data`
@@ -1626,6 +1673,12 @@ ALTER TABLE `appointment`
 --
 ALTER TABLE `asset`
   MODIFY `asset_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -1770,6 +1823,12 @@ ALTER TABLE `lab_test_result_config`
 --
 ALTER TABLE `leave_request`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `medical_report`
+--
+ALTER TABLE `medical_report`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `patient_data`
