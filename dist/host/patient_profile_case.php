@@ -72,12 +72,6 @@ foreach ($get_data_details as $data)
                                                 href="">Vitals</a></li>
 
                                         <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Drug administration</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Fluid Chart</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
                                                 href="">Nursing Remark</a></li>
 
                                         <li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -88,24 +82,6 @@ foreach ($get_data_details as $data)
 
                                         <li class="nav-item"><a class="nav-link" data-toggle="tab"
                                                 href="">Immunizations</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Bills</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Discharge summary</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Referral</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Medical Report</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Attachment</a></li>
-
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab"
-                                                href="">Comments</a></li>
                                     </ul>
                                 </div>
 
