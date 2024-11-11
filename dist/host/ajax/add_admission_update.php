@@ -1,6 +1,6 @@
 <?php
 include "../config/controller.php";
-include "../config/checkers.php";
+// include "../config/checkers.php";
 $app = new controller;
 
 // Get the input values
@@ -18,7 +18,7 @@ if (empty($postid)) {
 
 // If there are no errors, proceed with the database insert
 if (empty($errors)) {
-    $query = "update admission set status='2',discharged='yes' where id='$postid'";
+    $query = "update admission set status='2', discharged='yes' where id='$postid'";
     $get_category = $app->direct_insert($query);
     if ($get_category == "success") {
         echo "success";
