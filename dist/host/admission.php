@@ -64,60 +64,102 @@ $get_staff_name = base64_decode($app->get_request('st'));
                 <div class="row clearfix">
 
 
-                    <div class="col-lg-8 col-md-12">
+                    <div class="col-lg-12 col-md-12">
                         <div class="card taskboard">
-                            <div class="header">
-                                <h2>New</h2>
-                                <ul class="header-dropdown">
-                                    <li><span class="badge badge-primary"> </span></li>
-                                </ul>
-                            </div>
+                            
                             <div class="body planned_task">
-                                <div class="dd" data-plugin="nestable">
-                                    <ol class="dd-list">
-                                        <?php
-                                        $fetch_user1 = "SELECT admission.tittle, admission.doc_id, admission.id, admission.description, admission.appointment_date, staffs_accounts.firstname, staffs_accounts.lastname, staffs_accounts.photo, patient_data.photo AS patient_photo, wards.ward_name FROM admission LEFT JOIN staffs_accounts ON admission.doc_id = staffs_accounts.staff_id LEFT JOIN patient_data ON admission.pid = patient_data.pid LEFT JOIN wards ON admission.ward_id = wards.id WHERE admission.pid = '$get_staff_id'";
-                                        $fetch_user = $app->fetch_query($fetch_user1);
-                                        foreach ($fetch_user as $fetch_users) {
-                                            $fetch_user_id = $fetch_users['id'];
-                                            // $fetch_user_name = $fetch_users['name'];    
-                                        ?>
-                                            <li class="dd-item" data-id="1">
-                                                <div class="dd-handle d-flex justify-content-between align-items-center">
-                                                    <span style="text-transform:capitalize"><?php echo $fetch_users['firstname']; ?> <?php echo $fetch_users['lastname']; ?></span>
-                                                    <span><?php echo $fetch_users['appointment_date']; ?></span>
-                                                    <div class="action">
+                                <div class="table-responsive">
 
-                                                        <button type="button" class="btn btn-sm" title="Time"><i
-                                                                class="icon-clock"></i></button>
+                                    <table
+                                        class="table table-bordered table-hover js-basic-example dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">SN</th>
+                                                <th class="border-top-0">Title</th>
+                                                <th class="border-top-0">Description</th>
 
-                                                        <button type="button" class="btn btn-sm useappoint" data-postid="<?php echo $fetch_users['id']; ?>" title="Comment"><i
-                                                                class="icon-bubbles"></i></button>
+                                                <th class="border-top-0">Specialist</th>
+                                                <th class="border-top-0">Ward</th>
+                                                <th class="border-top-0">Room No/Bed No</th>
 
-                                                        <button type="button" class="btn btn-sm delete_appoint" title="Delete" data-id="<?php echo $fetch_users['id']; ?>"><i
-                                                                class="icon-trash"></i></button>
-                                                    </div>
-                                                </div>
-                                                <div class="dd-content mt-3">
-                                                    <h6><?php echo $fetch_users['tittle']; ?></h6>
-                                                    <p> <?php echo $fetch_users['description']; ?></p>
-                                                    <ul class="list-unstyled team-info mt-3 mb-3">
+                                                <th class="border-top-0">Doctor</th>
+                                                <th class="border-top-0">Admission Date/Time</th>
 
+                                                <th class="border-top-0">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $sql = "SELECT admission.tittle, admission.doc_id, admission.id, admission.description, admission.appointment_date,admission.room, specializations.specializations_name, staffs_accounts.firstname, staffs_accounts.lastname, staffs_accounts.photo, patient_data.photo AS patient_photo, wards.ward_name FROM admission LEFT JOIN staffs_accounts ON admission.doc_id = staffs_accounts.staff_id LEFT JOIN patient_data ON admission.pid = patient_data.pid LEFT JOIN wards ON admission.ward_id = wards.id LEFT JOIN specializations ON admission.specialist_id = specializations.id WHERE admission.pid = '$get_staff_id'";
+                                            $fetch_dpt = $app->fetch_query($sql);
+                                            $sn = 1;
+                                            foreach ($fetch_dpt as $fetch_users) {
 
-                                                        <li><img class="avatar xs" src="../profile_pic/<?php echo $fetch_users['photo']; ?>"
-                                                                title="Avatar" alt="Avatar"></li>
-                                                        <li><img class="avatar xs" src="../profile_pic/<?php echo $fetch_users['patient_photo']; ?>"
-                                                                title="Avatar" alt="Avatar"></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
+                                            ?>
+                                                <tr>
+                                                    <td>
+                                                        <?= $sn++; ?>
+                                                    </td>
+                                                    <td>
+                                                        <p class="">
+                                                            <?php echo $fetch_users['tittle']; ?>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="">
+                                                            <?php echo $fetch_users['description']; ?>
+                                                        </p>
+                                                    </td>
 
-                                        <?php
-                                        }
-                                        ?>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            <?php echo $fetch_users['specializations_name']; ?>
+                                                        </p>
+                                                    </td>
 
-                                    </ol>
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            <?php echo $fetch_users['ward_name']; ?>
+                                                        </p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p class="mb-0">
+                                                            <?php echo $fetch_users['room']; ?>
+                                                        </p>
+                                                    </td>
+
+                                                    <td>
+                                                        <p class="mb-0" style="text-transform:capitalize!important;">
+                                                            <?php echo $fetch_users['firstname']; ?> <?php echo $fetch_users['lastname']; ?>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $fetch_users['appointment_date']; ?>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                Action
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a class="dropdown-item useappoint" style="cursor:pointer;" data-postid="<?php echo $fetch_users['id']; ?>">Comment</a></li>
+                                                                <li><a class="dropdown-item delete_appoint" href="#" data-id="<?php echo $fetch_users['id']; ?>">Delete</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                            }
+
+                                            ?>
+
+                                        </tbody>
+                                    </table>
+
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -134,6 +176,7 @@ $get_staff_name = base64_decode($app->get_request('st'));
     </div>
 
     <!-- Jquery Core Js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
     <script src="../assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
 
@@ -492,7 +535,7 @@ $get_staff_name = base64_decode($app->get_request('st'));
                     style="color:white">Add Appointment</button> -->
                 <input type="submit" style="color:white" class="btn btn-success btn-simple waves-effect" id="addstatus"
                     value="Update Admission">
-                <button type="button" class="btn btn-danger btn-simple waves-effect" data-dismiss="modal">X</button>
+                <button type="button" class="btn btn-danger btn-simple waves-effect" data-bs-dismiss="modal">X</button>
             </div>
         </div>
         </form>
@@ -516,7 +559,7 @@ $get_staff_name = base64_decode($app->get_request('st'));
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-simple waves-effect" id="delete_appoints"
                     data-dismiss="modal" style="color:white">Yes</button>
-                <button type="button" class="btn btn-danger btn-simple waves-effect" data-dismiss="modal">X</button>
+                <button type="button" class="btn btn-danger btn-simple waves-effect" data-bs-dismiss="modal">X</button>
             </div>
         </div>
     </div>

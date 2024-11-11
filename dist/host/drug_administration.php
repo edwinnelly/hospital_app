@@ -186,7 +186,7 @@ foreach ($get_data_details as $data)
                                                                                 <a class="dropdown-item" href="drug-chart?fid=<?php echo base64_encode($get_staff_id); ?>&&did=<?php echo base64_encode($fetch['drug_id']); ?>&&nam=<?php echo base64_encode($fetch['drugs_name']); ?>">Chart Drug</a>
                                                                             <?php endif; ?>
                                                                         </li>
-                                                                   
+
                                                                         <li><a class="dropdown-item discontinue" style="cursor:pointer;" data-ids="<?php echo $fetch['id'] ?>" data-emp_names="<?php echo $fetch['drugs_name'] ?>">Discontinue Medication</a></li>
                                                                         <li><a class="dropdown-item" href="#">View Vaccination</a></li>
                                                                         <li><a class="dropdown-item delete_emp" href="#" data-emp_name="<?php echo $fetch['drugs_name']; ?>" data-id="<?php echo $fetch['id']; ?>">Delete Prescription</a></li>
