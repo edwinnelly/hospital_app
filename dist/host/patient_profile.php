@@ -73,7 +73,7 @@ foreach ($get_data_details as $data);
                                         <li class="nav-item"><a class="nav-link" href="patient_profile_case.php?fid=<?php echo $get_staff_id; ?>&&st=<?php echo base64_encode(rand(13323, 3233939)); ?>
                                                                 ">Case note</a></li>
 
-                                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="">Diagnosis
+                                        <li class="nav-item"><a class="nav-link"  href="diagnosis.php?fid=<?php echo base64_encode($get_staff_id); ?>&&st=<?php echo base64_encode($get_staff_id); ?>">Diagnosis
                                                 History</a></li>
 
                                         <li class="nav-item"><a class="nav-link"
