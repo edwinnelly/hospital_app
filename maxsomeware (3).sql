@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 08:00 PM
+-- Generation Time: Nov 12, 2024 at 07:14 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -79,7 +79,6 @@ CREATE TABLE `admission` (
 
 INSERT INTO `admission` (`id`, `pid`, `tittle`, `description`, `appointment_date`, `doc_id`, `dated`, `status`, `specialist_id`, `assigned_doc_id`, `payment_status`, `payment_type`, `hmo_id`, `folder_status`, `ward_id`, `room`, `discharged`) VALUES
 (4, 11919, 'his should work if the problem was due to the', 'his should work if the problem was due to the', '2024-10-26 17:59:00', 8702, '2024-10-06 18:59:11', 2, 10, 40, 'notpaid', 'open', NULL, 'open', 8, 23, 'yes'),
-(5, 11919, 'should work if the problem was due to the', 'In perferendis quis', '2024-11-02 18:47:00', 8702, '2024-10-06 19:47:17', 2, 5, 36, 'notpaid', 'open', NULL, 'open', 9, 23, 'yes'),
 (6, 11919, 'should work if the problem was due to the', 'In perferendis quis', '2024-11-07 18:50:00', 8702, '2024-10-06 19:50:04', 0, 9, 36, 'notpaid', 'open', NULL, 'open', 4, 23, 'No');
 
 -- --------------------------------------------------------
@@ -206,6 +205,29 @@ INSERT INTO `department` (`id`, `department_name`, `date_created`, `status`, `le
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `diagnosis`
+--
+
+CREATE TABLE `diagnosis` (
+  `id` int(11) NOT NULL,
+  `patient_id` varchar(100) DEFAULT NULL,
+  `doctor_id` varchar(100) DEFAULT NULL,
+  `diagnosis_suffered` varchar(100) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `date_onset` date DEFAULT NULL,
+  `date_resolved` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `diagnosis`
+--
+
+INSERT INTO `diagnosis` (`id`, `patient_id`, `doctor_id`, `diagnosis_suffered`, `status`, `date_onset`, `date_resolved`) VALUES
+(2, '11919', '8702', '7', 'chronic', '2024-11-13', '2024-11-15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `discharge_summary`
 --
 
@@ -291,7 +313,8 @@ CREATE TABLE `drug_admin` (
 
 INSERT INTO `drug_admin` (`id`, `patient_id`, `doctor_id`, `drug_id`, `dose`, `presc_date`, `frequency`, `start_date`, `end_date`, `next_due_date`, `status`, `skip_dose`, `created_at`, `updated_at`) VALUES
 (33, 11919, 8702, '18', '500mg', '2024-11-01', '1', '2024-11-02', '2024-11-09', '0000-00-00 00:00:00', 'discontinued', NULL, '2024-11-01 11:59:19', '2024-11-04 13:07:52'),
-(34, 11919, 8702, '20', '300mg', '2024-11-01', '1', '2024-11-02', '2024-11-10', '0000-00-00 00:00:00', 'no', NULL, '2024-11-01 15:51:24', '2024-11-01 15:51:24');
+(34, 11919, 8702, '20', '300mg', '2024-11-01', '1', '2024-11-02', '2024-11-10', '0000-00-00 00:00:00', 'no', NULL, '2024-11-01 15:51:24', '2024-11-01 15:51:24'),
+(35, 0, 0, '', '', '2024-11-12', '', '0000-00-00', '0000-00-00', '0000-00-00 00:00:00', 'no', NULL, '2024-11-12 12:27:23', '2024-11-12 12:27:23');
 
 -- --------------------------------------------------------
 
@@ -1294,7 +1317,7 @@ CREATE TABLE `staffs_accounts` (
 --
 
 INSERT INTO `staffs_accounts` (`id`, `staff_id`, `username`, `firstname`, `lastname`, `age`, `qualification`, `department_id`, `occupation`, `sex`, `marital_status`, `phone`, `email_address`, `password`, `next_of_kin`, `religion`, `tribe`, `salary`, `state_of_origin`, `nationality`, `photo`, `specialist_id`, `access_level_id`, `date_added`, `address`, `login_sec`, `hmo_key`) VALUES
-(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'c2993ebe10863d74dc4baf760ce587cfdcc683def948056aad7ae5b9c41bb78d', 4),
+(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'e3b6b02c887fa0a711e8d0950f23fb3b8977e068962c59413f7ed955d9fad29d', 4),
 (37, '6968', 'Darlington4334', 'Darlington', 'Markswell', NULL, NULL, 9, NULL, 'Female', 'Divorced', '+133-344-333-234', 'markswql32@gmail.com', '$2y$10$17Gl9nwUUj0IvfX.dtD7/.ePRdVzkrPnrakBe4Kxeln7YNCyFXgoG', NULL, NULL, NULL, 0, NULL, NULL, '19263249508507174638profilepicture-2-portrait-head.jpeg', 11, 3, '2024-03-04 19:09:38', NULL, NULL, NULL),
 (38, '7103', 'jude230404', 'James', 'Judes', NULL, 'doc', 5, 'test', 'Male', 'Single', '+1-959-434-333', 'jude@gmail.com', '12345678', 'test1', 'Islam', 'test2', 0, 'test3', 'test4', '59036974417032658281testimonial3.png', 5, 1, '2024-03-04 19:11:01', '', 'c855490cca3c62647712b70accc1649160369495aa67ef5f2d5cb962a19dc4d6', 3),
 (40, '11910', 'Ijeoma23323', 'Peter', 'Ijeoma', NULL, NULL, 1, NULL, 'Female', 'Single', '+55-959-434-333', 'Ijeoma@gmail.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, '96900264384358715127favicon.png', 5, 6, '2024-03-04 19:20:53', '', NULL, NULL),
@@ -1411,6 +1434,12 @@ ALTER TABLE `comment`
 -- Indexes for table `department`
 --
 ALTER TABLE `department`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `diagnosis`
+--
+ALTER TABLE `diagnosis`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1687,6 +1716,12 @@ ALTER TABLE `department`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
+-- AUTO_INCREMENT for table `diagnosis`
+--
+ALTER TABLE `diagnosis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `discharge_summary`
 --
 ALTER TABLE `discharge_summary`
@@ -1702,7 +1737,7 @@ ALTER TABLE `drugs_list`
 -- AUTO_INCREMENT for table `drug_admin`
 --
 ALTER TABLE `drug_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `drug_brand_category`

@@ -97,7 +97,7 @@ foreach ($get_data_details as $data);
 
 
                                         <li class="nav-item"><a class="nav-link" href="referrals.php?fid=<?php echo $get_staff_id; ?>&&st=<?php echo base64_encode(rand(13323, 3233939)); ?>
-                                                                ">Referrals</a>
+                                                                ">Referral Letter</a>
                                         </li>
 
                                         <li class="nav-item"><a class="nav-link"  href="medical_report?fid=<?php echo base64_encode($get_staff_id); ?>">Medical

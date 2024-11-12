@@ -13,7 +13,7 @@ $get_staff_id = $app->get_request('fid');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Appointment">
 
-    <title>Manage Referrals Note</title>
+    <title>Manage Referrals Letter</title>
     <!-- Favicon-->
     <link rel="stylesheet" href="../assets/plugins/bootstrap-select/css/bootstrap-select.css" />
     <link rel="stylesheet" href="../assets/plugins/summernote/dist/summernote.css" />
@@ -79,7 +79,7 @@ $get_staff_id = $app->get_request('fid');
                                 <li class="breadcrumb-item">Users</li>
                                 <li class="breadcrumb-item active">Folder</li>
                             </ul>
-                            <h1 class="mb-1 mt-1">Referrals Note</h1>
+                            <h1 class="mb-1 mt-1">Referrals Letter</h1>
                         </div>
                         <div class="col-lg-6 col-md-12 text-md-right">
                         <a href="patient_profile?fid=<?php echo $get_staff_id; ?>&&st=TWFya3NvbiBPIEhpbmxkYQ=="><button type="button" class="btn btn-sm" title="Time"><i class="icon-home" style="color:white"></i></button></a>
