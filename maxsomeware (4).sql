@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 07:14 PM
+-- Generation Time: Nov 13, 2024 at 03:06 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1134,6 +1134,23 @@ INSERT INTO `radio_graphy_test` (`id`, `radio_dpt`, `sample`, `amount`, `test_da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `referral`
+--
+
+CREATE TABLE `referral` (
+  `id` int(15) NOT NULL,
+  `patient_id` varchar(100) DEFAULT NULL,
+  `doctor_id` varchar(100) DEFAULT NULL,
+  `diagnosis_suffered` varchar(100) DEFAULT NULL,
+  `reason_referral` longtext DEFAULT NULL,
+  `referring_condition` longtext DEFAULT NULL,
+  `referred_to` varchar(100) DEFAULT NULL,
+  `date` date DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `referrals`
 --
 
@@ -1317,7 +1334,7 @@ CREATE TABLE `staffs_accounts` (
 --
 
 INSERT INTO `staffs_accounts` (`id`, `staff_id`, `username`, `firstname`, `lastname`, `age`, `qualification`, `department_id`, `occupation`, `sex`, `marital_status`, `phone`, `email_address`, `password`, `next_of_kin`, `religion`, `tribe`, `salary`, `state_of_origin`, `nationality`, `photo`, `specialist_id`, `access_level_id`, `date_added`, `address`, `login_sec`, `hmo_key`) VALUES
-(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'e3b6b02c887fa0a711e8d0950f23fb3b8977e068962c59413f7ed955d9fad29d', 4),
+(36, '8702', 'wilson_dickson', 'sunday', 'dickson', NULL, 'Radiograpy', 9, 'socium 123', 'Male', 'Single', '+234-344-333-231', 'diona@mail.com', '1234567', '', 'Islam', '', 1000001, 'River State', 'Nigeria', '88921024733051956647profilepicture-2-portrait-head.jpeg', 10, 1, '2024-03-04 19:08:43', NULL, 'fb2fbe6aafa47dbe19233c88de0f95bb156311cc7abf563522c2668b371c4279', 4),
 (37, '6968', 'Darlington4334', 'Darlington', 'Markswell', NULL, NULL, 9, NULL, 'Female', 'Divorced', '+133-344-333-234', 'markswql32@gmail.com', '$2y$10$17Gl9nwUUj0IvfX.dtD7/.ePRdVzkrPnrakBe4Kxeln7YNCyFXgoG', NULL, NULL, NULL, 0, NULL, NULL, '19263249508507174638profilepicture-2-portrait-head.jpeg', 11, 3, '2024-03-04 19:09:38', NULL, NULL, NULL),
 (38, '7103', 'jude230404', 'James', 'Judes', NULL, 'doc', 5, 'test', 'Male', 'Single', '+1-959-434-333', 'jude@gmail.com', '12345678', 'test1', 'Islam', 'test2', 0, 'test3', 'test4', '59036974417032658281testimonial3.png', 5, 1, '2024-03-04 19:11:01', '', 'c855490cca3c62647712b70accc1649160369495aa67ef5f2d5cb962a19dc4d6', 3),
 (40, '11910', 'Ijeoma23323', 'Peter', 'Ijeoma', NULL, NULL, 1, NULL, 'Female', 'Single', '+55-959-434-333', 'Ijeoma@gmail.com', NULL, NULL, NULL, NULL, 0, NULL, NULL, '96900264384358715127favicon.png', 5, 6, '2024-03-04 19:20:53', '', NULL, NULL),
@@ -1627,6 +1644,12 @@ ALTER TABLE `radio_graphy_test`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `referral`
+--
+ALTER TABLE `referral`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `referrals`
 --
 ALTER TABLE `referrals`
@@ -1900,6 +1923,12 @@ ALTER TABLE `radio_departments`
 --
 ALTER TABLE `radio_graphy_test`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `referral`
+--
+ALTER TABLE `referral`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `referrals`
